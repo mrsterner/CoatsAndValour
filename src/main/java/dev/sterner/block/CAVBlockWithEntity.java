@@ -29,7 +29,7 @@ public abstract class CAVBlockWithEntity<T extends CAVBlockEntity> extends Block
         return ((world, pos, state, blockEntity) -> {
             if (world.getBlockEntity(pos) instanceof CAVBlockEntity cavBlockEntity) {
                 cavBlockEntity.tick();
-                if(world.isClient()){
+                if (world.isClient()) {
                     cavBlockEntity.clientTick();
                 } else {
                     cavBlockEntity.serverTick();
