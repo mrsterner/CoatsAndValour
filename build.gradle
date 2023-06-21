@@ -19,9 +19,14 @@ repositories {
 		name = "SmartBrainLib"
 		url = "https://dl.cloudsmith.io/public/tslat/sbl/maven/"
 	}
+	maven {
+		name = "GeckoLib"
+		url "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/"
+	}
 }
 
 loom {
+	accessWidenerPath = file("src/main/resources/coats-and-valour.accesswidener")
     splitEnvironmentSourceSets()
 
 	mods {
@@ -66,6 +71,9 @@ dependencies {
 	//SmartBrainLib
 	modImplementation "net.tslat.smartbrainlib:SmartBrainLib-fabric-${project.minecraft_version}:${project.sbl_version}"
 	modImplementation "net.tslat.smartbrainlib:SmartBrainLib-common-${project.minecraft_version}:${project.sbl_version}"
+
+	//GeckoLib
+	modImplementation "software.bernie.geckolib:geckolib-fabric-1.20:${geckolib_version}"
 }
 
 processResources {
