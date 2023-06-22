@@ -2,7 +2,6 @@ package dev.sterner.registry;
 
 import dev.sterner.CoatsAndValour;
 import dev.sterner.common.item.BlunderbussItem;
-import dev.sterner.common.item.CAVGunItem;
 import dev.sterner.common.item.MusketItem;
 import dev.sterner.common.item.PistolItem;
 import dev.sterner.common.util.GunProperties;

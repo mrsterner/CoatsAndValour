@@ -1,7 +1,6 @@
 package dev.sterner.common.util;
 
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
 
 public class GunProperties {
 

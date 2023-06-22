@@ -12,7 +12,7 @@ public class ProjectileProperties {
     private Material material;
     private DamageSource damageSource;
 
-    private ProjectileProperties(){
+    private ProjectileProperties() {
 
     }
 
@@ -41,44 +41,44 @@ public class ProjectileProperties {
     }
 
     public static class Builder {
-        private final ProjectileProperties  properties = new ProjectileProperties();
+        private final ProjectileProperties properties = new ProjectileProperties();
 
-        public ProjectileProperties build(){
+        public ProjectileProperties build() {
             return this.properties;
         }
 
-        public Builder muzzleFlashTexture(Identifier texture){
+        public Builder muzzleFlashTexture(Identifier texture) {
             this.properties.muzzleFlashTexture = texture;
             return this;
         }
 
-        public Builder sound(SoundEvent soundEvent){
+        public Builder sound(SoundEvent soundEvent) {
             this.properties.sound = soundEvent;
             return this;
         }
 
-        public Builder recoilPower(float power){
+        public Builder recoilPower(float power) {
             this.properties.recoilPower = power;
             return this;
         }
 
-        public Builder damage(float damage){
+        public Builder damage(float damage) {
             this.properties.projectileDamage = damage;
             return this;
         }
 
-        public Builder material(Material material){
+        public Builder material(Material material) {
             this.properties.material = material;
             return this;
         }
 
-        public Builder damageSource(DamageSource damageSource){
+        public Builder damageSource(DamageSource damageSource) {
             this.properties.damageSource = damageSource;
             return this;
         }
     }
 
-    public enum Material{
+    public enum Material {
         IRON,
         SILVER
     }

@@ -5,16 +5,12 @@ import dev.sterner.common.util.GunProperties;
 import dev.sterner.common.util.ProjectileProperties;
 import dev.sterner.common.util.RecoilHandler;
 import mod.azure.azurelib.animatable.GeoItem;
-import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.EvokerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtHelper;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -24,18 +20,12 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
-import net.minecraft.util.math.random.Random;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
-import java.util.Optional;
-
 public abstract class CAVGunItem extends Item implements GeoItem {
-    private RecoilHandler handler;
+    private final RecoilHandler handler;
     private final GunProperties gunProperties;
     private final String AMMO = "Ammo";
     private final String LOADING = "Loading";
@@ -61,7 +51,7 @@ public abstract class CAVGunItem extends Item implements GeoItem {
             user.setCurrentHand(hand);
             return TypedActionResult.consume(stack);
 
-        }  else if (!isLoading(stack) && getLoadedAmmo(stack) > 0) {
+        } else if (!isLoading(stack) && getLoadedAmmo(stack) > 0) {
             ProjectileProperties projectileProperties = new ProjectileProperties.Builder().damage(2).recoilPower(10).sound(SoundEvents.ENTITY_GENERIC_EXPLODE).damageSource(world.getDamageSources().generic()).material(ProjectileProperties.Material.IRON).build();
             shoot(stack, user, projectileProperties);
             stack.damage(1, user, playerEntity -> playerEntity.sendToolBreakStatus(hand));
@@ -76,7 +66,7 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         return pair.getSecond();
     }
 
-    public String getShootAnimation(){
+    public String getShootAnimation() {
         return null;
     }
 
@@ -119,7 +109,7 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         return isLoading(stack) ? UseAction.BOW : UseAction.NONE;
     }
 
-    private boolean shoot(ItemStack itemStack, PlayerEntity player, ProjectileProperties projectileProperties){
+    private boolean shoot(ItemStack itemStack, PlayerEntity player, ProjectileProperties projectileProperties) {
         World world = player.getWorld();
 
         if (!world.isClient() && getShootAnimation() != null) {
@@ -151,7 +141,7 @@ public abstract class CAVGunItem extends Item implements GeoItem {
 
         HitResult blockHit = world.raycast(new RaycastContext(vec3d, vec3d3, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, player));
 
-        if (hitt != null && hitt.getEntity() != null && (blockHit.squaredDistanceTo(player) > hitt.getEntity().squaredDistanceTo(player))){
+        if (hitt != null && hitt.getEntity() != null && (blockHit.squaredDistanceTo(player) > hitt.getEntity().squaredDistanceTo(player))) {
             hitt.getEntity().damage(projectileProperties.getDamageSource(), projectileProperties.getProjectileDamage());
             return true;
         }
@@ -163,12 +153,12 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         return !player.isSubmergedInWater();
     }
 
-    private int getLoadedAmmo(ItemStack stack){
+    private int getLoadedAmmo(ItemStack stack) {
         NbtCompound gun = stack.getOrCreateNbt().getCompound(GUN);
         return gun.getInt(AMMO);
     }
 
-    public void increaseAmmo(ItemStack stack){
+    public void increaseAmmo(ItemStack stack) {
         Pair<Integer, Boolean> pair = getGunProps(stack);
         modifyGun(stack, Math.min(pair.getFirst() + 1, gunProperties.getMaxAmmo()), pair.getSecond());
     }
@@ -178,18 +168,18 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         modifyGun(stack, Math.max(pair.getFirst() - 1, 0), pair.getSecond());
     }
 
-    public ItemStack modifyGun(ItemStack stack, int ammo){
+    public ItemStack modifyGun(ItemStack stack, int ammo) {
         Pair<Integer, Boolean> pair = getGunProps(stack);
         return modifyGun(stack, ammo, pair.getSecond());
     }
 
-    public ItemStack modifyGun(ItemStack stack, boolean loading){
+    public ItemStack modifyGun(ItemStack stack, boolean loading) {
         Pair<Integer, Boolean> pair = getGunProps(stack);
         return modifyGun(stack, pair.getFirst(), loading);
     }
 
 
-    public ItemStack modifyGun(ItemStack stack, int ammo, boolean loading){
+    public ItemStack modifyGun(ItemStack stack, int ammo, boolean loading) {
         NbtCompound gun = new NbtCompound();
         gun.putInt(AMMO, ammo);
         gun.putBoolean(LOADING, loading);
@@ -197,7 +187,7 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         return stack;
     }
 
-    public Pair<Integer, Boolean> getGunProps(ItemStack stack){
+    public Pair<Integer, Boolean> getGunProps(ItemStack stack) {
         NbtCompound nbtCompound = stack.getOrCreateNbt().getCompound(GUN);
         return Pair.of(nbtCompound.getInt(AMMO), nbtCompound.getBoolean(LOADING));
     }

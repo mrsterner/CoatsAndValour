@@ -1,157 +1,261 @@
 {
-	"format_version": "1.8.0",
-	"animations": {
-		"animation.musket.fire": {
-			"animation_length": 0.48,
-			"bones": {
-				"body": {
-					"rotation": {
-						"0.16": {
-							"vector": [0, 0, 0]
-						},
-						"0.2": {
-							"vector": [-5, 0, 0]
-						},
-						"0.28": {
-							"vector": [0, 0, 0]
-						}
-					},
-					"position": {
-						"0.12": {
-							"vector": [0, 0, 0]
-						},
-						"0.16": {
-							"vector": [0, 0, 2]
-						},
-						"0.28": {
-							"vector": [0, 0, 0]
-						}
-					}
-				},
-				"flint": {
-					"rotation": {
-						"0.0": {
-							"vector": [-50, 0, 0]
-						},
-						"0.04": {
-							"vector": [50, 0, 0]
-						}
-					}
-				},
-				"pan": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.04": {
-							"vector": [75, 0, 0]
-						}
-					}
-				}
-			}
-		},
-		"animation.musket.unloaded": {
-			"loop": true,
-			"bones": {
-				"flint": {
-					"rotation": {
-						"vector": [50, 0, 0]
-					}
-				},
-				"pan": {
-					"rotation": {
-						"vector": [75, 0, 0]
-					}
-				}
-			}
-		},
-		"animation.musket.half_cocked": {
-			"loop": true,
-			"bones": {
-				"flint": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"pan": {
-					"rotation": {
-						"vector": [75, 0, 0]
-					}
-				}
-			}
-		},
-		"animation.musket.primed": {
-			"loop": true,
-			"bones": {
-				"flint": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"pan": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					}
-				}
-			}
-		},
-		"animation.musket.standby": {
-			"loop": true,
-			"bones": {
-				"flint": {
-					"rotation": {
-						"vector": [-50, 0, 0]
-					}
-				},
-				"pan": {
-					"rotation": {
-						"vector": [0, 0, 0]
-					}
-				}
-			}
-		},
-		"animation.musket.reloading(combine)": {
-			"loop": true,
-			"bones": {
-				"body": {
-					"rotation": {
-						"vector": [-60, 0, 0]
-					},
-					"position": {
-						"vector": [0, -10, 4]
-					}
-				}
-			}
-		},
-		"animation.musket.bayonet": {
-			"animation_length": 0.24,
-			"bones": {
-				"body": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.08": {
-							"vector": [0, 0, 25]
-						},
-						"0.24": {
-							"vector": [0, 0, 0]
-						}
-					},
-					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.08": {
-							"vector": [0, 0, -7]
-						},
-						"0.24": {
-							"vector": [0, 0, 0]
-						}
-					}
-				}
-			}
-		}
-	},
-	"geckolib_format_version": 2
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.musket.fire": {
+      "animation_length": 0.48,
+      "bones": {
+        "body": {
+          "rotation": {
+            "0.16": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.2": {
+              "vector": [
+                -5,
+                0,
+                0
+              ]
+            },
+            "0.28": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "position": {
+            "0.12": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.16": {
+              "vector": [
+                0,
+                0,
+                2
+              ]
+            },
+            "0.28": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        },
+        "flint": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                -50,
+                0,
+                0
+              ]
+            },
+            "0.04": {
+              "vector": [
+                50,
+                0,
+                0
+              ]
+            }
+          }
+        },
+        "pan": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.04": {
+              "vector": [
+                75,
+                0,
+                0
+              ]
+            }
+          }
+        }
+      }
+    },
+    "animation.musket.unloaded": {
+      "loop": true,
+      "bones": {
+        "flint": {
+          "rotation": {
+            "vector": [
+              50,
+              0,
+              0
+            ]
+          }
+        },
+        "pan": {
+          "rotation": {
+            "vector": [
+              75,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.musket.half_cocked": {
+      "loop": true,
+      "bones": {
+        "flint": {
+          "rotation": {
+            "vector": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "pan": {
+          "rotation": {
+            "vector": [
+              75,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.musket.primed": {
+      "loop": true,
+      "bones": {
+        "flint": {
+          "rotation": {
+            "vector": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        "pan": {
+          "rotation": {
+            "vector": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.musket.standby": {
+      "loop": true,
+      "bones": {
+        "flint": {
+          "rotation": {
+            "vector": [
+              -50,
+              0,
+              0
+            ]
+          }
+        },
+        "pan": {
+          "rotation": {
+            "vector": [
+              0,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.musket.reloading(combine)": {
+      "loop": true,
+      "bones": {
+        "body": {
+          "rotation": {
+            "vector": [
+              -60,
+              0,
+              0
+            ]
+          },
+          "position": {
+            "vector": [
+              0,
+              -10,
+              4
+            ]
+          }
+        }
+      }
+    },
+    "animation.musket.bayonet": {
+      "animation_length": 0.24,
+      "bones": {
+        "body": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.08": {
+              "vector": [
+                0,
+                0,
+                25
+              ]
+            },
+            "0.24": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            }
+          },
+          "position": {
+            "0.0": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            },
+            "0.08": {
+              "vector": [
+                0,
+                0,
+                -7
+              ]
+            },
+            "0.24": {
+              "vector": [
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        }
+      }
+    }
+  },
+  "geckolib_format_version": 2
 }

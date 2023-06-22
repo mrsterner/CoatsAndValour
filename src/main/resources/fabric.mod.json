@@ -31,7 +31,7 @@
   "mixins": [
     "coats-and-valour.mixins.json"
   ],
-  "accessWidener" : "coats-and-valour.accesswidener",
+  "accessWidener": "coats-and-valour.accesswidener",
   "depends": {
     "fabricloader": ">=0.14.21",
     "minecraft": "~1.20.1",
