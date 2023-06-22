@@ -5,7 +5,9 @@ import dev.sterner.common.util.GunProperties;
 import dev.sterner.common.util.ProjectileProperties;
 import dev.sterner.common.util.RecoilHandler;
 import mod.azure.azurelib.animatable.GeoItem;
+import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.mob.EvokerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
@@ -13,6 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtHelper;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
@@ -21,9 +24,15 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
+
+import java.util.Optional;
 
 public abstract class CAVGunItem extends Item implements GeoItem {
     private RecoilHandler handler;
@@ -47,10 +56,11 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         }
 
         user.setCurrentHand(hand);
-        if (user.isSneaking()) {
+        if (user.isSneaking() && getLoadedAmmo(stack) < gunProperties.getMaxAmmo()) {
             modifyGun(stack, true);
             user.setCurrentHand(hand);
             return TypedActionResult.consume(stack);
+
         }  else if (!isLoading(stack) && getLoadedAmmo(stack) > 0) {
             ProjectileProperties projectileProperties = new ProjectileProperties.Builder().damage(2).recoilPower(10).sound(SoundEvents.ENTITY_GENERIC_EXPLODE).damageSource(world.getDamageSources().generic()).material(ProjectileProperties.Material.IRON).build();
             shoot(stack, user, projectileProperties);
@@ -120,9 +130,17 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         handler.recoil(player, projectileProperties.getRecoilPower());
         world.playSound(null, player.getBlockPos(), projectileProperties.getSound(), SoundCategory.PLAYERS);
 
+
         Vec3d vec3d = player.getCameraPosVec(1);
         Vec3d vec3d2 = player.getRotationVec(1);
         Vec3d vec3d3 = vec3d.add(vec3d2.x * gunProperties.getRange(), vec3d2.y * gunProperties.getRange(), vec3d2.z * gunProperties.getRange());
+
+
+        for (int i = 0; i < 5; i++) {
+            double step = 1.0;
+            Vec3d pos = vec3d.add(vec3d2.x * step * i, vec3d2.y * step * i, vec3d2.z * step * i);
+            world.addImportantParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, true, pos.getX(), pos.getY(), pos.getZ(), 0.0, 0.02, 0.0);
+        }
 
         double distance = Math.pow(gunProperties.getRange(), 2);
 
