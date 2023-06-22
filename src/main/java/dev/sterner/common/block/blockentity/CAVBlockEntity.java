@@ -1,5 +1,6 @@
-package dev.sterner.block.blockentity;
+package dev.sterner.common.block.blockentity;
 
+import dev.sterner.common.block.CAVBlockWithEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -26,7 +27,7 @@ public abstract class CAVBlockEntity extends BlockEntity {
 
     /**
      * Triggered from:
-     * {@link dev.sterner.block.CAVBlockWithEntity#onBreak(World, BlockPos, BlockState, PlayerEntity)}
+     * {@link CAVBlockWithEntity#onBreak(World, BlockPos, BlockState, PlayerEntity)}
      *
      * @param player
      */
@@ -36,7 +37,7 @@ public abstract class CAVBlockEntity extends BlockEntity {
 
     /**
      * Triggered from:
-     * {@link dev.sterner.block.CAVBlockWithEntity#onPlaced(World, BlockPos, BlockState, LivingEntity, ItemStack)}
+     * {@link CAVBlockWithEntity#onPlaced(World, BlockPos, BlockState, LivingEntity, ItemStack)}
      */
     public void onPlaced(@NotNull World world, @NotNull BlockPos pos, @NotNull BlockState state, LivingEntity placer, ItemStack stack) {
 
@@ -44,7 +45,7 @@ public abstract class CAVBlockEntity extends BlockEntity {
 
     /**
      * Triggered from:
-     * {@link dev.sterner.block.CAVBlockWithEntity#onUse(BlockState, World, BlockPos, PlayerEntity, Hand, BlockHitResult)}
+     * {@link CAVBlockWithEntity#onUse(BlockState, World, BlockPos, PlayerEntity, Hand, BlockHitResult)}
      */
     public ActionResult onUse(PlayerEntity player, Hand hand) {
         return ActionResult.PASS;

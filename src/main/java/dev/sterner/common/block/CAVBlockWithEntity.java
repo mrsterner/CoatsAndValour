@@ -1,6 +1,6 @@
-package dev.sterner.block;
+package dev.sterner.common.block;
 
-import dev.sterner.block.blockentity.CAVBlockEntity;
+import dev.sterner.common.block.blockentity.CAVBlockEntity;
 import net.minecraft.block.BlockRenderType;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.BlockWithEntity;

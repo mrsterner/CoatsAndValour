@@ -10,10 +10,8 @@
     "TheRebelT"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
   },
-  "license": "CC0-1.0",
+  "license": "MIT",
   "icon": "assets/coats-and-valour/icon.png",
   "environment": "*",
   "entrypoints": {
@@ -27,15 +25,11 @@
       "dev.sterner.datagen.CoatsAndValourDataGenerator"
     ],
     "emi": [
-      "dev.sterner.integration.emi.CAVEmiPlugin"
+      "dev.sterner.client.integration.emi.CAVEmiPlugin"
     ]
   },
   "mixins": [
-    "coats-and-valour.mixins.json",
-    {
-      "config": "coats-and-valour.client.mixins.json",
-      "environment": "client"
-    }
+    "coats-and-valour.mixins.json"
   ],
   "accessWidener" : "coats-and-valour.accesswidener",
   "depends": {
@@ -43,8 +37,5 @@
     "minecraft": "~1.20.1",
     "java": ">=17",
     "fabric-api": "*"
-  },
-  "suggests": {
-    "another-mod": "*"
   }
 }
