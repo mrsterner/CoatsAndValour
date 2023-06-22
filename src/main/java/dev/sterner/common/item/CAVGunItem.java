@@ -20,19 +20,20 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.RaycastContext;
 import net.minecraft.world.World;
 
 public abstract class CAVGunItem extends Item implements GeoItem {
     private RecoilHandler handler;
     private final GunProperties gunProperties;
-    private final String AMMO = "ammo";
-    private final String LOADING = "loading";
+    private final String AMMO = "Ammo";
+    private final String LOADING = "Loading";
     private final String GUN = "Gun";
 
     public CAVGunItem(Settings settings, GunProperties gunProperties) {
-        super(settings);
+        super(settings.maxCount(1));
         this.handler = new RecoilHandler();
         this.gunProperties = gunProperties;
     }
@@ -124,13 +125,16 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         Vec3d vec3d3 = vec3d.add(vec3d2.x * gunProperties.getRange(), vec3d2.y * gunProperties.getRange(), vec3d2.z * gunProperties.getRange());
 
         double distance = Math.pow(gunProperties.getRange(), 2);
-        EntityHitResult hit = ProjectileUtil.getEntityCollision(world, player, vec3d, vec3d3,
-                player.getBoundingBox().stretch(vec3d2.multiply(distance)).expand(1.0D, 1.0D, 1.0D),
-                (target) -> !target.isSpectator() && target.isCollidable());
+
+        EntityHitResult hitt = ProjectileUtil.getEntityCollision(player.getWorld(), player, vec3d, vec3d3,
+                player.getBoundingBox().stretch(vec3d2.multiply(distance)).expand(2.0D, 2.0D, 2.0D),
+                (target) -> !target.isSpectator() && player.canSee(target));
 
 
-        if (hit != null && hit.getEntity() != null){
-            hit.getEntity().damage(projectileProperties.getDamageSource(), projectileProperties.getProjectileDamage());
+        HitResult blockHit = world.raycast(new RaycastContext(vec3d, vec3d3, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, player));
+
+        if (hitt != null && hitt.getEntity() != null && (blockHit.squaredDistanceTo(player) > hitt.getEntity().squaredDistanceTo(player))){
+            hitt.getEntity().damage(projectileProperties.getDamageSource(), projectileProperties.getProjectileDamage());
             return true;
         }
 
