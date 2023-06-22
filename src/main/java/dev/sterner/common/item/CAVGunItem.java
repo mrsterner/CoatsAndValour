@@ -127,7 +127,7 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         double distance = Math.pow(gunProperties.getRange(), 2);
 
         EntityHitResult hitt = ProjectileUtil.getEntityCollision(player.getWorld(), player, vec3d, vec3d3,
-                player.getBoundingBox().stretch(vec3d2.multiply(distance)).expand(2.0D, 2.0D, 2.0D),
+                player.getBoundingBox().stretch(vec3d2.multiply(distance)).expand(1.0D, 1.0D, 1.0D),
                 (target) -> !target.isSpectator() && player.canSee(target));
 
 

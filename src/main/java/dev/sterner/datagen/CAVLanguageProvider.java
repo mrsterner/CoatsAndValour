@@ -11,6 +11,7 @@ public class CAVLanguageProvider extends FabricLanguageProvider {
 
     @Override
     public void generateTranslations(TranslationBuilder builder) {
+        builder.add("coats-and-valour.group.main", "Coats and Valour");
         builder.add(CAVObjects.BLUNDERBUSS, "Blunderbuss");
         builder.add(CAVObjects.PISTOL, "Pistol");
         builder.add(CAVObjects.MUSKET, "Musket");
