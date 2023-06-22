@@ -1,17 +1,12 @@
 package dev.sterner.common.util;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 
 public class RecoilHandler {
-    public float eN;
 
-    public void recoil(MinecraftClient client, ClientWorld clientWorld, ItemStack itemStack, PlayerEntity player) {
-
-        float powerPitch = this.eN;
+    public void recoil(PlayerEntity player, float power) {
+        float powerPitch = power;
         float yaw = powerPitch * 0.5F;
         if (player.isSneaking()) {
             powerPitch *= 0.7F;

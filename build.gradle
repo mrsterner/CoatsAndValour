@@ -19,8 +19,12 @@ repositories {
 		url = "https://dl.cloudsmith.io/public/tslat/sbl/maven/"
 	}
 	maven {
-		name = "GeckoLib"
-		url "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/"
+		name = "AzureLib"
+		url "https://dl.cloudsmith.io/public/azuredoom-mods/azurelib/maven/"
+	}
+	maven {
+		name = "Jitpack"
+		url = "https://jitpack.io"
 	}
 }
 
@@ -64,8 +68,11 @@ dependencies {
 	modImplementation "net.tslat.smartbrainlib:SmartBrainLib-fabric-${project.minecraft_version}:${project.sbl_version}"
 	modImplementation "net.tslat.smartbrainlib:SmartBrainLib-common-${project.minecraft_version}:${project.sbl_version}"
 
-	//GeckoLib
-	modImplementation "software.bernie.geckolib:geckolib-fabric-1.20:${geckolib_version}"
+	//AzureLib
+	modImplementation "mod.azure.azurelib:azurelib-fabric-${project.minecraft_version}:${project.azure_version}"
+
+	//MixinExtras
+	include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:0.2.0-beta.6")))
 }
 
 processResources {
