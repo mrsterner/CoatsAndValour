@@ -1,10 +1,12 @@
 package dev.sterner.registry;
 
 import dev.sterner.CoatsAndValour;
+import dev.sterner.common.item.AmmoItem;
 import dev.sterner.common.item.BlunderbussItem;
 import dev.sterner.common.item.MusketItem;
 import dev.sterner.common.item.PistolItem;
 import dev.sterner.common.util.GunProperties;
+import dev.sterner.common.util.ProjectileProperties;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Block;
@@ -32,6 +34,22 @@ public interface CAVObjects {
     Item PISTOL = register("pistol", new PistolItem(new Item.Settings(), new GunProperties.Builder().range(32).maxAmmo(1).reloadTicks(20 * 4).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
     Item BLUNDERBUSS = register("blunderbuss", new BlunderbussItem(new Item.Settings(), new GunProperties.Builder().range(32).maxAmmo(1).reloadTicks(20 * 4).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
     Item MUSKET = register("musket", new MusketItem(new Item.Settings(), new GunProperties.Builder().range(32).maxAmmo(1).reloadTicks(20 * 4).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
+    Item BANDAGE = register("bandage", new Item(new Item.Settings()));
+    Item BATTLE_MAP = register("battle_map", new Item(new Item.Settings()));
+    Item BLOCK_RAMMER = register("block_rammer", new Item(new Item.Settings()));
+    Item BONE_SAW = register("bone_saw", new Item(new Item.Settings()));
+    Item CASESHOT = register("caseshot", new Item(new Item.Settings()));
+    Item NATION_FLAG = register("nation_flag", new Item(new Item.Settings()));
+    Item MUSKET_SHOT = register("musket_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
+    Item PELLET_SHOT = register("pellet_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
+    Item PISTOL_SHOT = register("pistol_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
+    Item POWDER_CHARGE = register("powder_charge", new Item(new Item.Settings()));
+    Item RAMROD = register("ramrod", new Item(new Item.Settings()));
+    Item ROUNDSHOT = register("roundshot", new Item(new Item.Settings()));
+    Item SABRE = register("sabre", new Item(new Item.Settings()));
+    Item SHELLSHOT = register("shellshot", new Item(new Item.Settings()));
+    Item SILVER_SHOT = register("silver_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
+    Item SPONGE = register("sponge", new Item(new Item.Settings()));
 
     static <T extends Item> T register(String name, T item) {
         ITEMS.put(item, CoatsAndValour.id(name));

@@ -4,10 +4,11 @@ import net.minecraft.sound.SoundEvent;
 
 public class GunProperties {
 
-    private int maxAmmo;
-    private int reloadTicks;
+    private int maxAmmo = 1;
+    private int reloadTicks = 20;
     private SoundEvent reloadSound;
-    private int range;
+    private int range = 32;
+    private int shots = 1;
 
     private GunProperties() {
 
@@ -27,6 +28,10 @@ public class GunProperties {
 
     public int getRange() {
         return range;
+    }
+
+    public int getShots() {
+        return shots;
     }
 
     public static class Builder {
@@ -53,6 +58,11 @@ public class GunProperties {
 
         public Builder range(int range) {
             this.properties.range = range;
+            return this;
+        }
+
+        public Builder shots(int shots){
+            this.properties.shots = shots;
             return this;
         }
     }

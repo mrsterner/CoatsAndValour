@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "coats-and-valour:item/pistol_shot"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "exposed": 1
+      },
+      "model": "coats-and-valour:item/pistol_shot_exposed"
+    }
+  ]
+}

@@ -16,7 +16,7 @@ import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-public class BlunderbussItem extends CAVGunItem implements GeoItem {
+public class BlunderbussItem extends CockableGunItem implements GeoItem {
     private final AnimatableInstanceCache cache = AzureLibUtil.createInstanceCache(this);
     private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
