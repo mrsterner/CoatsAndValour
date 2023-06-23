@@ -10,6 +10,8 @@ import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -27,7 +29,9 @@ public class ItemRendererMixin {
     @Inject(method = "getModel", at = @At("HEAD"), cancellable = true)
     private void cav$getHeldItemModel(ItemStack stack, World world, LivingEntity entity, int seed, CallbackInfoReturnable<BakedModel> cir) {
         if (stack.getItem() instanceof IGeoDualModel) {
-            BakedModel bakedModel = models.getModelManager().getModel(new ModelIdentifier("minecraft", "trident_in_hand", "inventory"));
+            Identifier itemId = Registries.ITEM.getId(stack.getItem());
+            var m = new ModelIdentifier(itemId.withPath(itemId.getPath() + "_gui"), "inventory");
+            BakedModel bakedModel = models.getModelManager().getModel(m);
             ClientWorld clientWorld = world instanceof ClientWorld ? (ClientWorld) world : null;
             BakedModel bakedModel2 = bakedModel.getOverrides().apply(bakedModel, stack, clientWorld, entity, seed);
             cir.setReturnValue(bakedModel2 == null ? this.models.getModelManager().getMissingModel() : bakedModel2);

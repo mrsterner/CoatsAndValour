@@ -4,6 +4,7 @@ import dev.sterner.api.interfaces.IGeoDualModel;
 import dev.sterner.client.render.item.GeoDualModelItemRenderer;
 import dev.sterner.common.util.GunProperties;
 import dev.sterner.registry.CAVObjects;
+import dev.sterner.registry.CAVTagKeys;
 import mod.azure.azurelib.animatable.GeoItem;
 import mod.azure.azurelib.animatable.SingletonGeoAnimatable;
 import mod.azure.azurelib.animatable.client.RenderProvider;
@@ -14,7 +15,9 @@ import mod.azure.azurelib.core.animation.RawAnimation;
 import mod.azure.azurelib.core.object.PlayState;
 import mod.azure.azurelib.util.AzureLibUtil;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
+import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.TagKey;
 
 import java.util.function.Consumer;
 import java.util.function.Supplier;
@@ -29,8 +32,8 @@ public class MusketItem extends GeoCockableGunItem implements IGeoDualModel {
     }
 
     @Override
-    public String getShootAnimation() {
-        return "animation.musket.fire";
+    public TagKey<Item> getAmmoTag() {
+        return CAVTagKeys.MUSKET_AMMO;
     }
 
     @Override

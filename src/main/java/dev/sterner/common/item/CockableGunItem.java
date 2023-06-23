@@ -55,8 +55,8 @@ public abstract class CockableGunItem extends Item {
         System.out.println("CockStage: " + getCockedStage(stack));
         switch (getCockedStage(stack)) {
             case UNCOCKED -> halfCock(player, stack);
-            case HALFCOCKED -> prime(player, stack);
-            case PRE_PRIME -> prePrime(player, stack);
+            case HALFCOCKED -> prePrime(player, stack);
+            case PRE_PRIME -> prime(player, stack);
             case PRIME -> finishPrime(player, stack);
             case FINISH_PRIME -> ramrod(player, stack);
             case RAMROD -> cock(player, stack);
@@ -76,18 +76,22 @@ public abstract class CockableGunItem extends Item {
     }
 
     private void prePrime(PlayerEntity player, ItemStack stack) {
+        //TODO fix this its all broken
         ItemStack offHand = player.getOffHandStack();
-        ItemStack newOffHan = offHand.split(1);
-        if (offHand.isIn(getAmmoTag()) && newOffHan.getItem() instanceof AmmoItem) {
-            if (offHand.getCount() > 1) {
-                if (!player.getInventory().insertStack(offHand)) {
-                    player.dropItem(offHand, true);
+        if (offHand.isIn(getAmmoTag())) {
+            ItemStack newOffHan = offHand.copy().split(1);
+            if (offHand.isIn(getAmmoTag()) && newOffHan.getItem() instanceof AmmoItem) {
+                offHand.decrement(1);
+                if (offHand.getCount() > 1) {
+                    if (!player.getInventory().insertStack(offHand)) {
+                        player.dropItem(offHand, true);
+                    }
                 }
+                newOffHan.getOrCreateNbt().putInt("Exposed", 1);
+                player.setStackInHand(Hand.MAIN_HAND, new ItemStack(newOffHan.getItem(), 1));
+
+                modifyGun(stack, getCockedStage(stack).next());
             }
-            newOffHan.getOrCreateNbt().putInt("Exposed", 1);
-            player.setStackInHand(Hand.MAIN_HAND, new ItemStack(newOffHan.getItem(), 1));
-            
-            modifyGun(stack, getCockedStage(stack).next());
         }
     }
 
