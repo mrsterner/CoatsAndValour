@@ -7,7 +7,7 @@ import net.minecraft.world.World;
 
 public class ParticleUtils {
 
-    public static void generateParticleVector(World world, Vec3d startPos, Vec3d direction, ParticleEffect effect, double steps, int count, boolean cone){
+    public static void generateParticleVector(World world, Vec3d startPos, Vec3d direction, ParticleEffect effect, double steps, int count, boolean cone) {
         for (int i = 0; i < count; i++) {
             Vec3d pos = startPos.add(direction.x * steps * i, direction.y * steps * i, direction.z * steps * i);
             world.addImportantParticle(effect, true, pos.getX(), pos.getY(), pos.getZ(), 0.0, 0.02, 0.0);
@@ -27,7 +27,7 @@ public class ParticleUtils {
         }
     }
 
-    public static void generateParticleVector(World world, PlayerEntity player, ParticleEffect effect, double steps, int count, boolean cone){
+    public static void generateParticleVector(World world, PlayerEntity player, ParticleEffect effect, double steps, int count, boolean cone) {
         generateParticleVector(world, player.getCameraPosVec(1), player.getRotationVec(1), effect, steps, count, cone);
     }
 }

@@ -12,17 +12,14 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtHelper;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.StringIdentifiable;
 import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
 import net.minecraft.util.function.ValueLists;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
@@ -65,7 +62,7 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         return TypedActionResult.consume(stack);
     }
 
-    public TagKey<Item> getAmmoTag(){
+    public TagKey<Item> getAmmoTag() {
         return null;
     }
 
@@ -162,7 +159,7 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         NbtCompound gun = stack.getOrCreateNbt().getCompound(GUN);
         NbtList nbtList = gun.getList("AmmoInfoList", NbtElement.COMPOUND_TYPE);
         List<AmmoInfo> outList = new ArrayList<>();
-        for(int i = 0; i < nbtList.size(); ++i) {
+        for (int i = 0; i < nbtList.size(); ++i) {
             NbtCompound nbtCompound = nbtList.getCompound(i);
             ProjectileProperties.AmmoType type = ProjectileProperties.AmmoType.byId(nbtCompound.getInt("AmmoType"));
             int count = nbtCompound.getInt("Count");
@@ -172,7 +169,7 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         return outList;
     }
 
-    private GunInfo.Cock getCockedStage(ItemStack stack){
+    private GunInfo.Cock getCockedStage(ItemStack stack) {
         NbtCompound gun = stack.getOrCreateNbt().getCompound(GUN);
         return GunInfo.Cock.byId(gun.getInt(COCKED));
     }
@@ -236,7 +233,7 @@ public abstract class CockableGunItem extends Item implements GeoItem {
             nbtCompound.putInt("AmmoType", ammoInfo.type.getId());
             nbtList.add(nbtCompound);
         }
-        if (!nbtList.isEmpty()){
+        if (!nbtList.isEmpty()) {
             gun.put("AmmoInfoList", nbtList);
         }
 
@@ -252,10 +249,10 @@ public abstract class CockableGunItem extends Item implements GeoItem {
     }
 
     public static class AmmoInfo {
-        private ProjectileProperties.AmmoType type;
+        private final ProjectileProperties.AmmoType type;
         private int count;
 
-        public AmmoInfo(ProjectileProperties.AmmoType type, int count){
+        public AmmoInfo(ProjectileProperties.AmmoType type, int count) {
             this.count = count;
             this.type = type;
         }
@@ -272,7 +269,7 @@ public abstract class CockableGunItem extends Item implements GeoItem {
             this.ammoItem = ammoItem;
         }
 
-        public List<AmmoInfo> getAmmoInfoList(){
+        public List<AmmoInfo> getAmmoInfoList() {
             return ammoInfoList;
         }
 
@@ -289,19 +286,19 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         }
 
         enum Cock implements StringIdentifiable {
-            UNCOCKED(0,"UnCocked"),
-            HALFCOCKED(1,"HalfCocked"),
-            PRE_PRIME(2,"PrePrime"),
-            PRIME(3,"Prime"),
-            FINISH_PRIME(4,"FinishPrime"),
-            RAMROD(5,"Ramrod"),
-            COCKED(6,"Cocked");
+            UNCOCKED(0, "UnCocked"),
+            HALFCOCKED(1, "HalfCocked"),
+            PRE_PRIME(2, "PrePrime"),
+            PRIME(3, "Prime"),
+            FINISH_PRIME(4, "FinishPrime"),
+            RAMROD(5, "Ramrod"),
+            COCKED(6, "Cocked");
 
             private final String name;
             private final int id;
             private static final IntFunction<Cock> BY_ID = ValueLists.createIdToValueFunction(Cock::getId, values(), ValueLists.OutOfBoundsHandling.ZERO);
 
-            Cock( int id, String name){
+            Cock(int id, String name) {
                 this.name = name;
                 this.id = id;
             }

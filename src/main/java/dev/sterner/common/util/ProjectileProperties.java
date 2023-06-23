@@ -1,12 +1,8 @@
 package dev.sterner.common.util;
 
-import dev.sterner.common.item.CockableGunItem;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.Registries;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.function.ValueLists;
 
@@ -61,7 +57,7 @@ public class ProjectileProperties {
         return gun;
     }
 
-    public static ProjectileProperties readNbt(NbtCompound gun){
+    public static ProjectileProperties readNbt(NbtCompound gun) {
         NbtCompound properties = gun.getCompound("Properties");
         ProjectileProperties projectileProperties = new ProjectileProperties();
         projectileProperties.ammoType = AmmoType.byId(properties.getInt("AmmoType"));
@@ -121,7 +117,7 @@ public class ProjectileProperties {
         private static final IntFunction<AmmoType> BY_ID = ValueLists.createIdToValueFunction(AmmoType::getId, values(), ValueLists.OutOfBoundsHandling.ZERO);
         private final int id;
 
-        AmmoType(int id){
+        AmmoType(int id) {
             this.id = id;
         }
 
