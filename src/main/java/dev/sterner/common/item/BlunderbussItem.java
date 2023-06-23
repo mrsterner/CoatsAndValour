@@ -26,11 +26,6 @@ public class BlunderbussItem extends CockableGunItem implements GeoItem {
     }
 
     @Override
-    public String getShootAnimation() {
-        return "animation.musket.fire";
-    }
-
-    @Override
     public void createRenderer(Consumer<Object> consumer) {
         consumer.accept(new RenderProvider() {
             private BlunderbussRenderer renderer = null;
@@ -50,11 +45,7 @@ public class BlunderbussItem extends CockableGunItem implements GeoItem {
         return this.renderProvider;
     }
 
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(new AnimationController<>(this, "shoot_controller", state -> PlayState.CONTINUE)
-                .triggerableAnim(getShootAnimation(), RawAnimation.begin().thenPlay(getShootAnimation())));
-    }
+
 
     @Override
     public AnimatableInstanceCache getAnimatableInstanceCache() {

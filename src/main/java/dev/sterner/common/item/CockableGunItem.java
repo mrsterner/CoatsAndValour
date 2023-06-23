@@ -6,6 +6,10 @@ import dev.sterner.common.util.ProjectileProperties;
 import dev.sterner.common.util.RecoilHandler;
 import dev.sterner.registry.CAVParticleTypes;
 import mod.azure.azurelib.animatable.GeoItem;
+import mod.azure.azurelib.core.animation.AnimatableManager;
+import mod.azure.azurelib.core.animation.AnimationController;
+import mod.azure.azurelib.core.animation.RawAnimation;
+import mod.azure.azurelib.core.object.PlayState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
@@ -34,7 +38,6 @@ import java.util.function.IntFunction;
 public abstract class CockableGunItem extends Item implements GeoItem {
     private final RecoilHandler handler;
     private final GunProperties gunProperties;
-    private final String CURRENT_PROJECTILE_PROPERTIES = "CurrentProperties";
     private final String COCKED = "Cocked";
     private final String GUN = "Gun";
 
@@ -45,19 +48,19 @@ public abstract class CockableGunItem extends Item implements GeoItem {
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack stack = user.getStackInHand(hand);
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getStackInHand(hand);
 
-        user.setCurrentHand(hand);
+        player.setCurrentHand(hand);
 
         switch (getCockedStage(stack)) {
-            case UNCOCKED -> halfCock(user, stack);
-            case HALFCOCKED -> prime(user, stack);
-            case PRE_PRIME -> prePrime(user, stack);
-            case PRIME -> finishPrime(user, stack);
-            case FINISH_PRIME -> ramrod(user, stack);
-            case RAMROD -> cock(user, stack);
-            case COCKED -> shoot(user, stack);
+            case UNCOCKED -> halfCock(player, stack);
+            case HALFCOCKED -> prime(player, stack);
+            case PRE_PRIME -> prePrime(player, stack);
+            case PRIME -> finishPrime(player, stack);
+            case FINISH_PRIME -> ramrod(player, stack);
+            case RAMROD -> cock(player, stack);
+            case COCKED -> shoot(player, stack);
         }
         return TypedActionResult.consume(stack);
     }
@@ -66,47 +69,67 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         return null;
     }
 
-    private void halfCock(PlayerEntity user, ItemStack stack) {
-        if (user.isSneaking()) {
+    private void halfCock(PlayerEntity player, ItemStack stack) {
+        if (player.isSneaking()) {
             modifyGun(stack, getCockedStage(stack).next());
         }
     }
 
-    private void prePrime(PlayerEntity user, ItemStack stack) {
-        ItemStack offHand = user.getOffHandStack();
+    private void prePrime(PlayerEntity player, ItemStack stack) {
+        ItemStack offHand = player.getOffHandStack();
         ItemStack newOffHan = offHand.split(1);
-        if (offHand.isIn(getAmmoTag()) && newOffHan.getItem() instanceof AmmoItem ammoItem) {
+        if (offHand.isIn(getAmmoTag()) && newOffHan.getItem() instanceof AmmoItem) {
             if (offHand.getCount() > 1) {
-                if (!user.getInventory().insertStack(offHand)) {
-                    user.dropItem(offHand, true);
+                if (!player.getInventory().insertStack(offHand)) {
+                    player.dropItem(offHand, true);
                 }
             }
             newOffHan.getOrCreateNbt().putInt("Exposed", 1);
-            user.setStackInHand(Hand.MAIN_HAND, new ItemStack(newOffHan.getItem(), 1));
-
-            increaseAmmo(stack, ammoItem.getProjectileProperties().getAmmoType());
+            player.setStackInHand(Hand.MAIN_HAND, new ItemStack(newOffHan.getItem(), 1));
+            
+            modifyGun(stack, getCockedStage(stack).next());
         }
     }
 
-    private void prime(PlayerEntity user, ItemStack stack) {
-
+    private void prime(PlayerEntity player, ItemStack stack) {
+        World world = player.getWorld();
+        if (!world.isClient()) {
+            triggerAnim(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getPrimeAndReloadAnimation());
+        }
+        modifyGun(stack, getCockedStage(stack).next());
     }
 
-    private void finishPrime(PlayerEntity user, ItemStack stack) {
-
+    private void finishPrime(PlayerEntity player, ItemStack stack) {
+        World world = player.getWorld();
+        ItemStack offHand = player.getOffHandStack();
+        if (!world.isClient() && getShootAnimation() != null) {
+            triggerAnim(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getShootAnimation());
+        }
+        if (offHand.isIn(getAmmoTag()) && offHand.getItem() instanceof AmmoItem ammoItem && offHand.getOrCreateNbt().getInt("Exposed") == 1) {
+            modifyGun(stack, ammoItem.getProjectileProperties(), getCockedStage(stack).next());
+            stack.decrement(1);
+        }
+        
     }
 
-    private void ramrod(PlayerEntity user, ItemStack stack) {
-
+    private void ramrod(PlayerEntity player, ItemStack stack) {
+        //TODO add ramrod fx
+        World world = player.getWorld();
+        if (!world.isClient() && getShootAnimation() != null) {
+            triggerAnim(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getRamrodAnimation());
+        }
+        modifyGun(stack, getCockedStage(stack).next());
     }
 
-    private void cock(PlayerEntity user, ItemStack stack) {
-
+    private void cock(PlayerEntity player, ItemStack stack) {
+        World world = player.getWorld();
+        if (!world.isClient() && getShootAnimation() != null) {
+            triggerAnim(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getCockedAnimation());
+        }
+        modifyGun(stack, getCockedStage(stack).next());
     }
 
-    public String getShootAnimation() {
-        return null;
-    }
+    
 
     public boolean isMuzzling() {
         return false;
@@ -114,10 +137,9 @@ public abstract class CockableGunItem extends Item implements GeoItem {
 
     private boolean shoot(PlayerEntity player, ItemStack itemStack) {
         World world = player.getWorld();
-        //Todo make ammo have this instead of hardcoded
 
         if (!world.isClient() && getShootAnimation() != null) {
-            triggerAnim(player, GeoItem.getOrAssignId(itemStack, (ServerWorld) world), "shoot_controller", getShootAnimation());
+            triggerAnim(player, GeoItem.getOrAssignId(itemStack, (ServerWorld) world), "gun_controller", "primed");
         }
         GunInfo gunInfo = getGunProps(itemStack);
         ProjectileProperties projectileProperties = gunInfo.getAmmoItem();
@@ -219,6 +241,11 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         return modifyGun(stack, info.getAmmoItem(), info.getAmmoInfoList(), cock);
     }
 
+    public ItemStack modifyGun(ItemStack stack, ProjectileProperties properties, GunInfo.Cock cock) {
+        GunInfo info = getGunProps(stack);
+        return modifyGun(stack, properties, info.getAmmoInfoList(), cock);
+    }
+
     public ItemStack modifyGun(ItemStack stack, List<AmmoInfo> ammoInfoList) {
         GunInfo info = getGunProps(stack);
         return modifyGun(stack, info.getAmmoItem(), ammoInfoList, info.getCockStage());
@@ -246,6 +273,48 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         NbtCompound nbtCompound = stack.getOrCreateNbt().getCompound(GUN);
         ProjectileProperties properties = ProjectileProperties.readNbt(nbtCompound);
         return GunInfo.of(GunInfo.Cock.byId(nbtCompound.getInt(COCKED)), properties, getLoadedAmmoInfo(stack));
+    }
+
+    public String getShootAnimation() {
+        return "animation.musket.fire";
+    }
+
+    public String getUnloadedAnimation() {
+        return "animation.musket.unloaded";
+    }
+
+    public String getHalfCockedAnimation() {
+        return null;
+    }
+
+    public String getPrimeAndReloadAnimation() {
+        return "animation.musket.reloading(combine)";
+    }
+
+    public String getPrimeAnimation() {
+        return "animation.musket.primed";
+    }
+
+    public String getCockedAnimation() {
+        return "animation.musket.cocked";
+    }
+
+    public String getRamrodAnimation(){
+        //TODO?
+        return "animation.musket.cocked";
+    }
+    
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(
+                new AnimationController<>(this, "gun_controller", state -> PlayState.CONTINUE)
+                        .triggerableAnim(getUnloadedAnimation(), RawAnimation.begin().thenPlay(getUnloadedAnimation()))
+                        .triggerableAnim(getHalfCockedAnimation(), RawAnimation.begin().thenPlay(getHalfCockedAnimation()))
+                        .triggerableAnim(getShootAnimation(), RawAnimation.begin().thenPlay(getShootAnimation()))
+                        .triggerableAnim(getPrimeAndReloadAnimation(), RawAnimation.begin().thenPlay(getPrimeAnimation()).thenPlay(getPrimeAndReloadAnimation()))
+                        .triggerableAnim(getPrimeAnimation(), RawAnimation.begin().thenPlay(getPrimeAnimation()))
+                        .triggerableAnim(getCockedAnimation(), RawAnimation.begin().thenPlay(getCockedAnimation()))
+        );
     }
 
     public static class AmmoInfo {
