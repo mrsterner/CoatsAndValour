@@ -35,7 +35,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.IntFunction;
 
-public abstract class CockableGunItem extends Item implements GeoItem {
+public abstract class CockableGunItem extends Item {
     private final RecoilHandler handler;
     private final GunProperties gunProperties;
     private final String COCKED = "Cocked";
@@ -52,7 +52,7 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         ItemStack stack = player.getStackInHand(hand);
 
         player.setCurrentHand(hand);
-
+        System.out.println("CockStage: " + getCockedStage(stack));
         switch (getCockedStage(stack)) {
             case UNCOCKED -> halfCock(player, stack);
             case HALFCOCKED -> prime(player, stack);
@@ -99,6 +99,9 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         modifyGun(stack, getCockedStage(stack).next());
     }
 
+    private void triggerAnim(PlayerEntity player, long orAssignId, String gunController, String primeAndReloadAnimation) {
+    }
+
     private void finishPrime(PlayerEntity player, ItemStack stack) {
         World world = player.getWorld();
         ItemStack offHand = player.getOffHandStack();
@@ -126,7 +129,12 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         if (!world.isClient() && getShootAnimation() != null) {
             triggerAnim(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getCockedAnimation());
         }
-        modifyGun(stack, getCockedStage(stack).next());
+        if (gunProperties.getBarrels() > 1 && getTotalAmmo(stack) < gunProperties.getMaxAmmo()) {
+            modifyGun(stack, GunInfo.Cock.UNCOCKED);
+        } else {
+            modifyGun(stack, getCockedStage(stack).next());
+        }
+
     }
 
     
@@ -304,18 +312,7 @@ public abstract class CockableGunItem extends Item implements GeoItem {
         return "animation.musket.cocked";
     }
     
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(
-                new AnimationController<>(this, "gun_controller", state -> PlayState.CONTINUE)
-                        .triggerableAnim(getUnloadedAnimation(), RawAnimation.begin().thenPlay(getUnloadedAnimation()))
-                        .triggerableAnim(getHalfCockedAnimation(), RawAnimation.begin().thenPlay(getHalfCockedAnimation()))
-                        .triggerableAnim(getShootAnimation(), RawAnimation.begin().thenPlay(getShootAnimation()))
-                        .triggerableAnim(getPrimeAndReloadAnimation(), RawAnimation.begin().thenPlay(getPrimeAnimation()).thenPlay(getPrimeAndReloadAnimation()))
-                        .triggerableAnim(getPrimeAnimation(), RawAnimation.begin().thenPlay(getPrimeAnimation()))
-                        .triggerableAnim(getCockedAnimation(), RawAnimation.begin().thenPlay(getCockedAnimation()))
-        );
-    }
+
 
     public static class AmmoInfo {
         private final ProjectileProperties.AmmoType type;

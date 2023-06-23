@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "coats-and-valour:item/blunderbuss_item"
+  }
+}

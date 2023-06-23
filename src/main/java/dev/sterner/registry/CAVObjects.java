@@ -1,10 +1,7 @@
 package dev.sterner.registry;
 
 import dev.sterner.CoatsAndValour;
-import dev.sterner.common.item.AmmoItem;
-import dev.sterner.common.item.BlunderbussItem;
-import dev.sterner.common.item.MusketItem;
-import dev.sterner.common.item.PistolItem;
+import dev.sterner.common.item.*;
 import dev.sterner.common.util.GunProperties;
 import dev.sterner.common.util.ProjectileProperties;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
@@ -34,6 +31,11 @@ public interface CAVObjects {
     Item PISTOL = register("pistol", new PistolItem(new Item.Settings(), new GunProperties.Builder().range(32).maxAmmo(1).reloadTicks(20 * 4).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
     Item BLUNDERBUSS = register("blunderbuss", new BlunderbussItem(new Item.Settings(), new GunProperties.Builder().range(32).maxAmmo(1).reloadTicks(20 * 4).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
     Item MUSKET = register("musket", new MusketItem(new Item.Settings(), new GunProperties.Builder().range(32).maxAmmo(1).reloadTicks(20 * 4).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
+    Item DUCKFOT = register("duckfoot", new DuckfootItem(new Item.Settings(), new GunProperties.Builder().range(24).maxAmmo(4).barrels(4).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
+    Item NOCK_GUN = register("nock_gun", new NockItem(new Item.Settings(), new GunProperties.Builder().range(24).maxAmmo(3).barrels(3).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
+    Item SANGUINE_HUNTER = register("sanguine_hunter", new SanguineHunterItem(new Item.Settings(), new GunProperties.Builder().range(24).maxAmmo(3).barrels(3).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
+    Item PISTOL_SWORD = register("pistol_sword", new PistolSwordItem(new Item.Settings(), new GunProperties.Builder().range(24).maxAmmo(3).barrels(3).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
+
     Item BANDAGE = register("bandage", new Item(new Item.Settings()));
     Item BATTLE_MAP = register("battle_map", new Item(new Item.Settings()));
     Item BLOCK_RAMMER = register("block_rammer", new Item(new Item.Settings()));

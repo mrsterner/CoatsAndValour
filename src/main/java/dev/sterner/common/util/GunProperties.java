@@ -9,6 +9,7 @@ public class GunProperties {
     private SoundEvent reloadSound;
     private int range = 32;
     private int shots = 1;
+    private int barrels = 1;
 
     private GunProperties() {
 
@@ -32,6 +33,10 @@ public class GunProperties {
 
     public int getShots() {
         return shots;
+    }
+
+    public int getBarrels() {
+        return barrels;
     }
 
     public static class Builder {
@@ -63,6 +68,11 @@ public class GunProperties {
 
         public Builder shots(int shots) {
             this.properties.shots = shots;
+            return this;
+        }
+
+        public Builder barrels(int barrels){
+            this.properties.barrels =  barrels;
             return this;
         }
     }

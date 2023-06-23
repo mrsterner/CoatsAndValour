@@ -15,6 +15,11 @@ public class CAVLanguageProvider extends FabricLanguageProvider {
         builder.add(CAVObjects.BLUNDERBUSS, "Blunderbuss");
         builder.add(CAVObjects.PISTOL, "Pistol");
         builder.add(CAVObjects.MUSKET, "Musket");
+        builder.add(CAVObjects.NOCK_GUN, "Nock Gun");
+        builder.add(CAVObjects.DUCKFOT, "Duckfoot");
+        builder.add(CAVObjects.SANGUINE_HUNTER, "Sanguine Hunter");
+        builder.add(CAVObjects.PISTOL_SWORD, "Pistol Sword");
+
         builder.add(CAVObjects.BANDAGE, "Bandage");
         builder.add(CAVObjects.BATTLE_MAP, "Battle Map");
         builder.add(CAVObjects.BLOCK_RAMMER, "Block Rammer");

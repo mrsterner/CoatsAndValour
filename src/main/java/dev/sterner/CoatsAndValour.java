@@ -1,9 +1,6 @@
 package dev.sterner;
 
-import dev.sterner.registry.CAVBlockEntities;
-import dev.sterner.registry.CAVEntityTypes;
-import dev.sterner.registry.CAVObjects;
-import dev.sterner.registry.CAVParticleTypes;
+import dev.sterner.registry.*;
 import net.fabricmc.api.ModInitializer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
@@ -23,5 +20,6 @@ public class CoatsAndValour implements ModInitializer {
         CAVBlockEntities.init();
         CAVEntityTypes.init();
         CAVParticleTypes.init();
+        CAVTagKeys.init();
     }
 }

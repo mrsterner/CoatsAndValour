@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "#coats-and-valour:pistol_ammo",
+    "#coats-and-valour:musket_ammo",
+    "coats-and-valour:silver_shot",
+    "coats-and-valour:pellet_shot"
+  ]
+}

@@ -18,6 +18,7 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+@SuppressWarnings("deprecation")
 public abstract class CAVBlockWithEntity<T extends CAVBlockEntity> extends BlockWithEntity {
     public CAVBlockWithEntity(Settings settings) {
         super(settings);

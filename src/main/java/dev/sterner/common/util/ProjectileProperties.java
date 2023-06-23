@@ -1,6 +1,7 @@
 package dev.sterner.common.util;
 
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.passive.AxolotlEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
@@ -109,10 +110,10 @@ public class ProjectileProperties {
     }
 
     public enum AmmoType {
-        PISTOL(1),
-        MUSKET(2),
-        PELLET(3),
-        SILVER(4);
+        PISTOL(0),
+        MUSKET(1),
+        PELLET(2),
+        SILVER(3);
 
         private static final IntFunction<AmmoType> BY_ID = ValueLists.createIdToValueFunction(AmmoType::getId, values(), ValueLists.OutOfBoundsHandling.ZERO);
         private final int id;
