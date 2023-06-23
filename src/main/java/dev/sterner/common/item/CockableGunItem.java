@@ -94,19 +94,19 @@ public abstract class CockableGunItem extends Item {
     private void prime(PlayerEntity player, ItemStack stack) {
         World world = player.getWorld();
         if (!world.isClient()) {
-            triggerAnim(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getPrimeAndReloadAnimation());
+            triggerAnimation(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getPrimeAndReloadAnimation());
         }
         modifyGun(stack, getCockedStage(stack).next());
     }
 
-    private void triggerAnim(PlayerEntity player, long orAssignId, String gunController, String primeAndReloadAnimation) {
+    public void triggerAnimation(PlayerEntity player, long orAssignId, String gunController, String primeAndReloadAnimation) {
     }
 
     private void finishPrime(PlayerEntity player, ItemStack stack) {
         World world = player.getWorld();
         ItemStack offHand = player.getOffHandStack();
         if (!world.isClient() && getShootAnimation() != null) {
-            triggerAnim(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getShootAnimation());
+            triggerAnimation(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getShootAnimation());
         }
         if (offHand.isIn(getAmmoTag()) && offHand.getItem() instanceof AmmoItem ammoItem && offHand.getOrCreateNbt().getInt("Exposed") == 1) {
             modifyGun(stack, ammoItem.getProjectileProperties(), getCockedStage(stack).next());
@@ -119,7 +119,7 @@ public abstract class CockableGunItem extends Item {
         //TODO add ramrod fx
         World world = player.getWorld();
         if (!world.isClient() && getShootAnimation() != null) {
-            triggerAnim(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getRamrodAnimation());
+            triggerAnimation(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getRamrodAnimation());
         }
         modifyGun(stack, getCockedStage(stack).next());
     }
@@ -127,7 +127,7 @@ public abstract class CockableGunItem extends Item {
     private void cock(PlayerEntity player, ItemStack stack) {
         World world = player.getWorld();
         if (!world.isClient() && getShootAnimation() != null) {
-            triggerAnim(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getCockedAnimation());
+            triggerAnimation(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getCockedAnimation());
         }
         if (gunProperties.getBarrels() > 1 && getTotalAmmo(stack) < gunProperties.getMaxAmmo()) {
             modifyGun(stack, GunInfo.Cock.UNCOCKED);
@@ -147,7 +147,7 @@ public abstract class CockableGunItem extends Item {
         World world = player.getWorld();
 
         if (!world.isClient() && getShootAnimation() != null) {
-            triggerAnim(player, GeoItem.getOrAssignId(itemStack, (ServerWorld) world), "gun_controller", "primed");
+            triggerAnimation(player, GeoItem.getOrAssignId(itemStack, (ServerWorld) world), "gun_controller", "primed");
         }
         GunInfo gunInfo = getGunProps(itemStack);
         ProjectileProperties projectileProperties = gunInfo.getAmmoItem();

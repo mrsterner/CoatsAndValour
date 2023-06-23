@@ -47,18 +47,7 @@ public class MusketItem extends GeoCockableGunItem implements IGeoDualModel {
             }
         });
     }
-    @Override
-    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-        controllers.add(
-                new AnimationController<>(this, "gun_controller", state -> PlayState.CONTINUE)
-                        .triggerableAnim(getUnloadedAnimation(), RawAnimation.begin().thenPlay(getUnloadedAnimation()))
-                        .triggerableAnim(getHalfCockedAnimation(), RawAnimation.begin().thenPlay(getHalfCockedAnimation()))
-                        .triggerableAnim(getShootAnimation(), RawAnimation.begin().thenPlay(getShootAnimation()))
-                        .triggerableAnim(getPrimeAndReloadAnimation(), RawAnimation.begin().thenPlay(getPrimeAnimation()).thenPlay(getPrimeAndReloadAnimation()))
-                        .triggerableAnim(getPrimeAnimation(), RawAnimation.begin().thenPlay(getPrimeAnimation()))
-                        .triggerableAnim(getCockedAnimation(), RawAnimation.begin().thenPlay(getCockedAnimation()))
-        );
-    }
+
     @Override
     public Supplier<Object> getRenderProvider() {
         return this.renderProvider;
