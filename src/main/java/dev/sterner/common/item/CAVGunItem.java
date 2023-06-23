@@ -1,9 +1,13 @@
 package dev.sterner.common.item;
 
+import com.mojang.datafixers.kinds.App;
+import com.mojang.datafixers.kinds.K1;
 import com.mojang.datafixers.util.Pair;
 import dev.sterner.common.util.GunProperties;
+import dev.sterner.common.util.ParticleUtils;
 import dev.sterner.common.util.ProjectileProperties;
 import dev.sterner.common.util.RecoilHandler;
+import dev.sterner.registry.CAVParticleTypes;
 import mod.azure.azurelib.animatable.GeoItem;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -11,6 +15,7 @@ import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -62,8 +67,8 @@ public abstract class CAVGunItem extends Item implements GeoItem {
     }
 
     private boolean isLoading(ItemStack stack) {
-        Pair<Integer, Boolean> pair = getGunProps(stack);
-        return pair.getSecond();
+        GunInfo info = getGunProps(stack);
+        return info.isLoaded();
     }
 
     public String getShootAnimation() {
@@ -84,10 +89,10 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         increaseAmmo(stack);
         user.getWorld().playSound(null, user.getBlockPos(), gunProperties.getReloadSound(), SoundCategory.PLAYERS);
 
-        Pair<Integer, Boolean> pair = getGunProps(stack);
-        modifyGun(stack, pair.getFirst(), false);
-        if (user instanceof PlayerEntity) {
-            ((PlayerEntity) user).getItemCooldownManager().set(this, 20);
+        GunInfo info = getGunProps(stack);
+        modifyGun(stack, info.getAmmo(), false);
+        if (user instanceof PlayerEntity player) {
+            player.getItemCooldownManager().set(this, 20);
         }
 
         return stack;
@@ -120,17 +125,11 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         handler.recoil(player, projectileProperties.getRecoilPower());
         world.playSound(null, player.getBlockPos(), projectileProperties.getSound(), SoundCategory.PLAYERS);
 
-
         Vec3d vec3d = player.getCameraPosVec(1);
         Vec3d vec3d2 = player.getRotationVec(1);
         Vec3d vec3d3 = vec3d.add(vec3d2.x * gunProperties.getRange(), vec3d2.y * gunProperties.getRange(), vec3d2.z * gunProperties.getRange());
 
-
-        for (int i = 0; i < 5; i++) {
-            double step = 1.0;
-            Vec3d pos = vec3d.add(vec3d2.x * step * i, vec3d2.y * step * i, vec3d2.z * step * i);
-            world.addImportantParticle(ParticleTypes.CAMPFIRE_COSY_SMOKE, true, pos.getX(), pos.getY(), pos.getZ(), 0.0, 0.02, 0.0);
-        }
+        ParticleUtils.generateParticleVector(world, player, (ParticleEffect) CAVParticleTypes.SMOKE, 1, 5, true);
 
         double distance = Math.pow(gunProperties.getRange(), 2);
 
@@ -159,23 +158,23 @@ public abstract class CAVGunItem extends Item implements GeoItem {
     }
 
     public void increaseAmmo(ItemStack stack) {
-        Pair<Integer, Boolean> pair = getGunProps(stack);
-        modifyGun(stack, Math.min(pair.getFirst() + 1, gunProperties.getMaxAmmo()), pair.getSecond());
+        GunInfo info = getGunProps(stack);
+        modifyGun(stack, Math.min(info.getAmmo() + 1, gunProperties.getMaxAmmo()), info.isLoaded());
     }
 
     public void decreaseAmmo(ItemStack stack) {
-        Pair<Integer, Boolean> pair = getGunProps(stack);
-        modifyGun(stack, Math.max(pair.getFirst() - 1, 0), pair.getSecond());
+        GunInfo info = getGunProps(stack);
+        modifyGun(stack, Math.max(info.getAmmo() - 1, 0), info.isLoaded());
     }
 
     public ItemStack modifyGun(ItemStack stack, int ammo) {
-        Pair<Integer, Boolean> pair = getGunProps(stack);
-        return modifyGun(stack, ammo, pair.getSecond());
+        GunInfo info = getGunProps(stack);
+        return modifyGun(stack, ammo, info.isLoaded());
     }
 
     public ItemStack modifyGun(ItemStack stack, boolean loading) {
-        Pair<Integer, Boolean> pair = getGunProps(stack);
-        return modifyGun(stack, pair.getFirst(), loading);
+        GunInfo info = getGunProps(stack);
+        return modifyGun(stack, info.getAmmo(), loading);
     }
 
 
@@ -187,8 +186,30 @@ public abstract class CAVGunItem extends Item implements GeoItem {
         return stack;
     }
 
-    public Pair<Integer, Boolean> getGunProps(ItemStack stack) {
+    public GunInfo getGunProps(ItemStack stack) {
         NbtCompound nbtCompound = stack.getOrCreateNbt().getCompound(GUN);
-        return Pair.of(nbtCompound.getInt(AMMO), nbtCompound.getBoolean(LOADING));
+        return GunInfo.of(nbtCompound.getInt(AMMO), nbtCompound.getBoolean(LOADING));
+    }
+
+    public static class GunInfo {
+        private final int first;
+        private final boolean second;
+
+        public GunInfo(int first, boolean second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        public int getAmmo() {
+            return first;
+        }
+
+        public boolean isLoaded() {
+            return second;
+        }
+
+        public static GunInfo of(int ammo, boolean loaded) {
+            return new GunInfo(ammo, loaded);
+        }
     }
 }
