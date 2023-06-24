@@ -36,5 +36,11 @@ public class ItemRendererMixin {
             BakedModel bakedModel2 = bakedModel.getOverrides().apply(bakedModel, stack, clientWorld, entity, seed);
             cir.setReturnValue(bakedModel2 == null ? this.models.getModelManager().getMissingModel() : bakedModel2);
         }
+        if (stack.getItem() instanceof IDualModel) {
+            BakedModel bakedModel = models.getModelManager().getModel(new ModelIdentifier("minecraft", "trident_in_hand", "inventory"));
+            ClientWorld clientWorld = world instanceof ClientWorld ? (ClientWorld) world : null;
+            BakedModel bakedModel2 = bakedModel.getOverrides().apply(bakedModel, stack, clientWorld, entity, seed);
+            cir.setReturnValue(bakedModel2 == null ? this.models.getModelManager().getMissingModel() : bakedModel2);
+        }
     }
 }

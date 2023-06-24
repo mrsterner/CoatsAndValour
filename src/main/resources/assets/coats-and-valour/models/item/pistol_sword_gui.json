@@ -1,6 +1,6 @@
 {
-  "parent": "item/generated",
+  "parent": "item/handheld",
   "textures": {
-    "layer0": "coats-and-valour:item/pistol_sword_item"
+    "layer0": "coats-and-valour:item/pistol_sword_icon"
   }
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "coats-and-valour:item/sabre_icon"
+  }
+}

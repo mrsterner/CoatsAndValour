@@ -49,7 +49,7 @@ public interface CAVObjects {
     Item POWDER_CHARGE = register("powder_charge", new Item(new Item.Settings()));
     Item RAMROD = register("ramrod", new Item(new Item.Settings()));
     Item ROUNDSHOT = register("roundshot", new Item(new Item.Settings()));
-    Item SABRE = register("sabre", new Item(new Item.Settings()));
+    Item SABRE = register("sabre", new SabreItem(new Item.Settings()));
     Item SHELLSHOT = register("shellshot", new Item(new Item.Settings()));
     Item SILVER_SHOT = register("silver_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
     Item SPONGE = register("sponge", new Item(new Item.Settings()));
