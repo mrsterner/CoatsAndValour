@@ -1,15 +1,13 @@
 package dev.sterner.client.render.item;
 
+import dev.sterner.common.util.CAVUtils;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
 import net.minecraft.block.Block;
 import net.minecraft.block.StainedGlassPaneBlock;
 import net.minecraft.block.TransparentBlock;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
@@ -36,7 +34,6 @@ public class TwoDItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
     public TwoDItemRenderer(Identifier itemId) {
         this.id = new Identifier(itemId.getNamespace(), itemId.getPath() + "_renderer");
         this.itemId = itemId;
-        this.itemRenderer = MinecraftClient.getInstance().getItemRenderer();
     }
     
     @Override
@@ -63,7 +60,9 @@ public class TwoDItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
             if (this.inventoryModel == null) {
                 this.inventoryModel = MinecraftClient.getInstance().getBakedModelManager().getModel(new ModelIdentifier(itemId.withPath(itemId.getPath() + "_gui"), "inventory"));
             }
-            renderItem(itemRenderer, stack, mode, false, matrices, vertexConsumers, light, overlay, this.inventoryModel);
+            DiffuseLighting.enableGuiDepthLighting();
+            renderItem(itemRenderer, stack, mode, false, matrices, vertexConsumers, CAVUtils.MAX_LIGHT, overlay, this.inventoryModel);
+            DiffuseLighting.disableGuiDepthLighting();
         }
     }
 

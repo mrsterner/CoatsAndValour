@@ -30,7 +30,7 @@ public class ItemRendererMixin {
     private void cav$getHeldItemModel(ItemStack stack, World world, LivingEntity entity, int seed, CallbackInfoReturnable<BakedModel> cir) {
         if (stack.getItem() instanceof IGeoDualModel) {
             Identifier itemId = Registries.ITEM.getId(stack.getItem());
-            var m = new ModelIdentifier(itemId.withPath(itemId.getPath() + "_gui"), "inventory");
+            var m = new ModelIdentifier(itemId.withPath(itemId.getPath() + "_handheld"), "inventory");
             BakedModel bakedModel = models.getModelManager().getModel(m);
             ClientWorld clientWorld = world instanceof ClientWorld ? (ClientWorld) world : null;
             BakedModel bakedModel2 = bakedModel.getOverrides().apply(bakedModel, stack, clientWorld, entity, seed);

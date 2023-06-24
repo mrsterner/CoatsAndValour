@@ -1,21 +1,29 @@
 package dev.sterner.common.util;
 
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.passive.AxolotlEntity;
+import dev.sterner.CoatsAndValour;
+import net.minecraft.entity.damage.DamageType;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.function.ValueLists;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.function.IntFunction;
 
 public class ProjectileProperties {
-    private Identifier muzzleFlashTexture;
-    private float recoilPower;
-    private float projectileDamage;
-    private SoundEvent sound;
-    private AmmoType ammoType;
-    private DamageSource damageSource;
+    private Identifier muzzleFlashTexture = CoatsAndValour.id("textures/particles/muzzle_flash");
+    private float recoilPower = 1;
+    private float projectileDamage = 1;
+    private SoundEvent sound = SoundEvents.ENTITY_GENERIC_EXPLODE;
+    private AmmoType ammoType = AmmoType.PISTOL;
+    private RegistryKey<DamageType> damageSource = DamageTypes.GENERIC;
 
     private ProjectileProperties() {
 
@@ -41,7 +49,7 @@ public class ProjectileProperties {
         return ammoType;
     }
 
-    public DamageSource getDamageSource() {
+    public RegistryKey<DamageType> getDamageSource() {
         return damageSource;
     }
 
@@ -53,12 +61,13 @@ public class ProjectileProperties {
         nbtProperties.putString("SoundEvent", properties.sound.getId().toString());
         nbtProperties.putFloat("Recoil", properties.recoilPower);
         nbtProperties.putString("MuzzleTexture", properties.muzzleFlashTexture.toString());
+        //TODO nbtProperties.putString("DamageType", properties.damageSource.toString());
         gun.put("Properties", nbtProperties);
 
         return gun;
     }
 
-    public static ProjectileProperties readNbt(NbtCompound gun) {
+    public static ProjectileProperties readNbt(NbtCompound gun, @Nullable World world) {
         NbtCompound properties = gun.getCompound("Properties");
         ProjectileProperties projectileProperties = new ProjectileProperties();
         projectileProperties.ammoType = AmmoType.byId(properties.getInt("AmmoType"));
@@ -66,7 +75,17 @@ public class ProjectileProperties {
         projectileProperties.sound = SoundEvent.of(new Identifier(properties.getString("SoundEvent")));
         projectileProperties.recoilPower = properties.getFloat("Recoil");
         projectileProperties.muzzleFlashTexture = new Identifier(properties.getString("MuzzleTexture"));
+        /*TODO
+        if (world != null) {
+            int rawId = world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).getRawId(world.getDamageSources().registry.get(new Identifier(properties.getString("DamageType"))));
+            Optional<RegistryEntry.Reference<DamageType>> registryEntry = world.getRegistryManager().get(RegistryKeys.DAMAGE_TYPE).getEntry(rawId);
+            if (registryEntry.isPresent()) {
+                Optional<RegistryKey<DamageType>> optionalDamageTypeRegistryKey = registryEntry.get().getKey();
+                optionalDamageTypeRegistryKey.ifPresent(damageTypeRegistryKey -> projectileProperties.damageSource = damageTypeRegistryKey);
+            }
+        }
 
+         */
         return projectileProperties;
 
     }
@@ -103,7 +122,7 @@ public class ProjectileProperties {
             return this;
         }
 
-        public Builder damageSource(DamageSource damageSource) {
+        public Builder damageSource(RegistryKey<DamageType> damageSource) {
             this.properties.damageSource = damageSource;
             return this;
         }

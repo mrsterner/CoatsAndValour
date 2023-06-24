@@ -7,6 +7,7 @@ import dev.sterner.common.util.ProjectileProperties;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.minecraft.block.Block;
+import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
@@ -42,7 +43,7 @@ public interface CAVObjects {
     Item BONE_SAW = register("bone_saw", new Item(new Item.Settings()));
     Item CASESHOT = register("caseshot", new Item(new Item.Settings()));
     Item NATION_FLAG = register("nation_flag", new Item(new Item.Settings()));
-    Item MUSKET_SHOT = register("musket_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
+    Item MUSKET_SHOT = register("musket_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().damageSource(DamageTypes.GENERIC).build()));
     Item PELLET_SHOT = register("pellet_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
     Item PISTOL_SHOT = register("pistol_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
     Item POWDER_CHARGE = register("powder_charge", new Item(new Item.Settings()));

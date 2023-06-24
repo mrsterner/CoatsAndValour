@@ -1,15 +1,14 @@
 package dev.sterner.common.item;
 
-import dev.sterner.common.util.GunProperties;
-import dev.sterner.common.util.ParticleUtils;
-import dev.sterner.common.util.ProjectileProperties;
-import dev.sterner.common.util.RecoilHandler;
+import dev.sterner.common.util.*;
+import dev.sterner.registry.CAVObjects;
 import dev.sterner.registry.CAVParticleTypes;
 import mod.azure.azurelib.animatable.GeoItem;
 import mod.azure.azurelib.core.animation.AnimatableManager;
 import mod.azure.azurelib.core.animation.AnimationController;
 import mod.azure.azurelib.core.animation.RawAnimation;
 import mod.azure.azurelib.core.object.PlayState;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
@@ -52,7 +51,9 @@ public abstract class CockableGunItem extends Item {
         ItemStack stack = player.getStackInHand(hand);
 
         player.setCurrentHand(hand);
-        System.out.println("CockStage: " + getCockedStage(stack));
+        if (!world.isClient()) {
+            System.out.println("CockStage: " + getCockedStage(stack));
+        }
         switch (getCockedStage(stack)) {
             case UNCOCKED -> halfCock(player, stack);
             case HALFCOCKED -> prePrime(player, stack);
@@ -76,22 +77,23 @@ public abstract class CockableGunItem extends Item {
     }
 
     private void prePrime(PlayerEntity player, ItemStack stack) {
-        //TODO fix this its all broken
         ItemStack offHand = player.getOffHandStack();
         if (offHand.isIn(getAmmoTag())) {
-            ItemStack newOffHan = offHand.copy().split(1);
-            if (offHand.isIn(getAmmoTag()) && newOffHan.getItem() instanceof AmmoItem) {
-                offHand.decrement(1);
-                if (offHand.getCount() > 1) {
-                    if (!player.getInventory().insertStack(offHand)) {
-                        player.dropItem(offHand, true);
-                    }
-                }
-                newOffHan.getOrCreateNbt().putInt("Exposed", 1);
-                player.setStackInHand(Hand.MAIN_HAND, new ItemStack(newOffHan.getItem(), 1));
+            if (offHand.getCount() == 1) {
+                offHand.getOrCreateNbt().putInt("Exposed", 1);
+                player.setStackInHand(Hand.OFF_HAND, offHand);
+            } else {
+                ItemStack expodesAmmo = offHand.copy();
+                expodesAmmo.setCount(1);
+                expodesAmmo.getOrCreateNbt().putInt("Exposed", 1);
+                player.setStackInHand(Hand.OFF_HAND, expodesAmmo);
 
-                modifyGun(stack, getCockedStage(stack).next());
+                offHand.decrement(1);
+                if (!player.getInventory().insertStack(offHand)) {
+                    player.dropItem(offHand, true);
+                }
             }
+            modifyGun(stack, getCockedStage(stack).next());
         }
     }
 
@@ -114,7 +116,7 @@ public abstract class CockableGunItem extends Item {
         }
         if (offHand.isIn(getAmmoTag()) && offHand.getItem() instanceof AmmoItem ammoItem && offHand.getOrCreateNbt().getInt("Exposed") == 1) {
             modifyGun(stack, ammoItem.getProjectileProperties(), getCockedStage(stack).next());
-            stack.decrement(1);
+            offHand.decrement(1);
         }
         
     }
@@ -125,7 +127,9 @@ public abstract class CockableGunItem extends Item {
         if (!world.isClient() && getShootAnimation() != null) {
             triggerAnimation(player, GeoItem.getOrAssignId(stack, (ServerWorld) world), "gun_controller", getRamrodAnimation());
         }
-        modifyGun(stack, getCockedStage(stack).next());
+        if (player.getOffHandStack().isOf(CAVObjects.RAMROD)) {
+            modifyGun(stack, getCockedStage(stack).next());
+        }
     }
 
     private void cock(PlayerEntity player, ItemStack stack) {
@@ -138,7 +142,6 @@ public abstract class CockableGunItem extends Item {
         } else {
             modifyGun(stack, getCockedStage(stack).next());
         }
-
     }
 
     
@@ -178,7 +181,7 @@ public abstract class CockableGunItem extends Item {
         HitResult blockHit = world.raycast(new RaycastContext(vec3d, vec3d3, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, player));
 
         if (hitt != null && hitt.getEntity() != null && (blockHit.squaredDistanceTo(player) > hitt.getEntity().squaredDistanceTo(player))) {
-            hitt.getEntity().damage(projectileProperties.getDamageSource(), projectileProperties.getProjectileDamage());
+            hitt.getEntity().damage(world.getDamageSources().create(projectileProperties.getDamageSource()) , projectileProperties.getProjectileDamage());
             return true;
         }
 
@@ -283,7 +286,7 @@ public abstract class CockableGunItem extends Item {
 
     public GunInfo getGunProps(ItemStack stack) {
         NbtCompound nbtCompound = stack.getOrCreateNbt().getCompound(GUN);
-        ProjectileProperties properties = ProjectileProperties.readNbt(nbtCompound);
+        ProjectileProperties properties = ProjectileProperties.readNbt(nbtCompound, MinecraftClient.getInstance().world);
         return GunInfo.of(GunInfo.Cock.byId(nbtCompound.getInt(COCKED)), properties, getLoadedAmmoInfo(stack));
     }
 
