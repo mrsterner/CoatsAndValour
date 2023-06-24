@@ -2,7 +2,6 @@ package dev.sterner.common.item;
 
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
-import dev.sterner.api.interfaces.IDualModel;
 import dev.sterner.common.util.GunProperties;
 import dev.sterner.registry.CAVTagKeys;
 import net.minecraft.block.BlockState;
@@ -21,11 +20,11 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class CockableSwordItem extends CockableToolItem {
+public class CockableSwordGunItem extends CockableToolGunItem {
     private final float attackDamage;
     private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
-    public CockableSwordItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, GunProperties gunProperties, Settings settings) {
+    public CockableSwordGunItem(ToolMaterial toolMaterial, int attackDamage, float attackSpeed, GunProperties gunProperties, Settings settings) {
         super(settings, toolMaterial, gunProperties);
         this.attackDamage = (float)attackDamage + toolMaterial.getAttackDamage();
         ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();

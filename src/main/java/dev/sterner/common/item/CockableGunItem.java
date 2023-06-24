@@ -41,7 +41,7 @@ public abstract class CockableGunItem extends Item {
     private final String GUN = "Gun";
 
     public CockableGunItem(Settings settings, GunProperties gunProperties) {
-        super(settings.maxCount(1));
+        super(settings);
         this.handler = new RecoilHandler();
         this.gunProperties = gunProperties;
     }

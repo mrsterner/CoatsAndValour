@@ -4,10 +4,10 @@ import dev.sterner.common.util.GunProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ToolMaterial;
 
-public class CockableToolItem extends CockableGunItem {
+public class CockableToolGunItem extends CockableGunItem {
     private final ToolMaterial material;
 
-    public CockableToolItem(Settings settings, ToolMaterial material, GunProperties gunProperties) {
+    public CockableToolGunItem(Settings settings, ToolMaterial material, GunProperties gunProperties) {
         super(settings.maxDamageIfAbsent(material.getDurability()), gunProperties);
         this.material = material;
     }
