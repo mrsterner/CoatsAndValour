@@ -1,7 +1,8 @@
 package dev.sterner.common.item;
 
 import dev.sterner.api.interfaces.IDualModel;
-import net.minecraft.item.*;
+import net.minecraft.item.SwordItem;
+import net.minecraft.item.ToolMaterials;
 
 public class SabreItem extends SwordItem implements IDualModel {
     public SabreItem(Settings settings) {

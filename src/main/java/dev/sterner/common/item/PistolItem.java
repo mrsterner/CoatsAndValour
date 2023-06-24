@@ -3,20 +3,14 @@ package dev.sterner.common.item;
 import dev.sterner.api.interfaces.IGeoDualModel;
 import dev.sterner.client.render.item.GeoDualModelItemRenderer;
 import dev.sterner.common.util.GunProperties;
-import dev.sterner.registry.CAVObjects;
 import dev.sterner.registry.CAVTagKeys;
 import mod.azure.azurelib.animatable.GeoItem;
 import mod.azure.azurelib.animatable.SingletonGeoAnimatable;
 import mod.azure.azurelib.animatable.client.RenderProvider;
 import mod.azure.azurelib.core.animatable.instance.AnimatableInstanceCache;
-import mod.azure.azurelib.core.animation.AnimatableManager;
-import mod.azure.azurelib.core.animation.AnimationController;
-import mod.azure.azurelib.core.animation.RawAnimation;
-import mod.azure.azurelib.core.object.PlayState;
 import mod.azure.azurelib.util.AzureLibUtil;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.TagKey;
 
 import java.util.function.Consumer;
@@ -43,7 +37,7 @@ public class PistolItem extends GeoCockableGunItem implements IGeoDualModel {
 
             @Override
             public BuiltinModelItemRenderer getCustomRenderer() {
-                if (this.renderer == null){
+                if (this.renderer == null) {
                     this.renderer = new GeoDualModelItemRenderer<>("pistol");
                 }
 

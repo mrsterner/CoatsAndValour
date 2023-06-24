@@ -40,7 +40,7 @@ public class PlayerDataComponent implements AutoSyncedComponent {
         nbt.putInt("LeftArm", leftArm.getId());
     }
 
-    public void updatePlayerModel(){
+    public void updatePlayerModel() {
         this.playerModel.rightLeg.visible = rightLeg == BodyPartType.NORMAL;
         this.playerModel.leftLeg.visible = leftLeg == BodyPartType.NORMAL;
         this.playerModel.rightArm.visible = rightArm == BodyPartType.NORMAL;
@@ -52,39 +52,39 @@ public class PlayerDataComponent implements AutoSyncedComponent {
         CAVComponents.PLAYER_COMPONENT.sync(player);
     }
 
-    public void setRightLeg(BodyPartType type){
+    public void setRightLeg(BodyPartType type) {
         this.rightLeg = type;
         CAVComponents.PLAYER_COMPONENT.sync(player);
     }
 
-    public void setLeftLeg(BodyPartType type){
+    public void setLeftLeg(BodyPartType type) {
         this.leftLeg = type;
         CAVComponents.PLAYER_COMPONENT.sync(player);
     }
 
-    public void setRightArm(BodyPartType type){
+    public void setRightArm(BodyPartType type) {
         this.rightArm = type;
         CAVComponents.PLAYER_COMPONENT.sync(player);
     }
 
-    public void setLeftArm(BodyPartType type){
+    public void setLeftArm(BodyPartType type) {
         this.leftArm = type;
         CAVComponents.PLAYER_COMPONENT.sync(player);
     }
 
-    public BodyPartType getRightLeg(){
+    public BodyPartType getRightLeg() {
         return rightLeg;
     }
 
-    public BodyPartType getLeftLeg(){
+    public BodyPartType getLeftLeg() {
         return leftLeg;
     }
 
-    public BodyPartType getRightArm(){
+    public BodyPartType getRightArm() {
         return rightArm;
     }
 
-    public BodyPartType getLeftArm(){
+    public BodyPartType getLeftArm() {
         return leftArm;
     }
 
@@ -94,8 +94,8 @@ public class PlayerDataComponent implements AutoSyncedComponent {
         PEG_LEG(2, "peg_leg");
 
         private static final IntFunction<BodyPartType> BY_ID = ValueLists.createIdToValueFunction(BodyPartType::getId, values(), ValueLists.OutOfBoundsHandling.ZERO);
-        private String name;
-        private int id;
+        private final String name;
+        private final int id;
 
         BodyPartType(int id, String name) {
             this.name = name;

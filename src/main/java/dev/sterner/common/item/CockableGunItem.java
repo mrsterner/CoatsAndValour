@@ -1,14 +1,12 @@
 package dev.sterner.common.item;
 
-import dev.sterner.common.util.*;
+import dev.sterner.common.util.GunProperties;
+import dev.sterner.common.util.ParticleUtils;
+import dev.sterner.common.util.ProjectileProperties;
+import dev.sterner.common.util.RecoilHandler;
 import dev.sterner.registry.CAVObjects;
 import dev.sterner.registry.CAVParticleTypes;
 import mod.azure.azurelib.animatable.GeoItem;
-import mod.azure.azurelib.core.animation.AnimatableManager;
-import mod.azure.azurelib.core.animation.AnimationController;
-import mod.azure.azurelib.core.animation.RawAnimation;
-import mod.azure.azurelib.core.object.PlayState;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileUtil;
 import net.minecraft.item.Item;
@@ -118,7 +116,7 @@ public abstract class CockableGunItem extends Item {
             modifyGun(stack, ammoItem.getProjectileProperties(), getCockedStage(stack).next());
             offHand.decrement(1);
         }
-        
+
     }
 
     private void ramrod(PlayerEntity player, ItemStack stack) {
@@ -144,7 +142,6 @@ public abstract class CockableGunItem extends Item {
         }
     }
 
-    
 
     public boolean isMuzzling() {
         return false;
@@ -181,7 +178,7 @@ public abstract class CockableGunItem extends Item {
         HitResult blockHit = world.raycast(new RaycastContext(vec3d, vec3d3, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, player));
 
         if (hitt != null && hitt.getEntity() != null && (blockHit.squaredDistanceTo(player) > hitt.getEntity().squaredDistanceTo(player))) {
-            hitt.getEntity().damage(world.getDamageSources().create(projectileProperties.getDamageSource()) , projectileProperties.getProjectileDamage());
+            hitt.getEntity().damage(world.getDamageSources().create(projectileProperties.getDamageSource()), projectileProperties.getProjectileDamage());
             return true;
         }
 
@@ -314,11 +311,10 @@ public abstract class CockableGunItem extends Item {
         return "animation.musket.cocked";
     }
 
-    public String getRamrodAnimation(){
+    public String getRamrodAnimation() {
         //TODO?
         return "animation.musket.cocked";
     }
-    
 
 
     public static class AmmoInfo {

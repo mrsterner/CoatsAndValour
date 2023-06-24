@@ -17,11 +17,11 @@ import net.minecraft.util.Identifier;
 
 public interface CAVItemRenderers {
 
-    static void makeModelPredicate(Item i){
+    static void makeModelPredicate(Item i) {
         ModelPredicateProviderRegistry.register(i, new Identifier("exposed"), ((stack, world, entity, seed) -> entity == null ? 0 : stack.getOrCreateNbt().getInt("Exposed")));
     }
 
-    static void registerRenderer(Item item, Object renderer){
+    static void registerRenderer(Item item, Object renderer) {
         Identifier itemId = Registries.ITEM.getId(item);
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener((IdentifiableResourceReloadListener) renderer);
         BuiltinItemRendererRegistry.INSTANCE.register(item, (BuiltinItemRendererRegistry.DynamicItemRenderer) renderer);
@@ -31,14 +31,14 @@ public interface CAVItemRenderers {
         });
     }
 
-    static void clientInit(){
+    static void clientInit() {
         makeModelPredicate(CAVObjects.MUSKET_SHOT);
         makeModelPredicate(CAVObjects.PISTOL_SHOT);
         makeModelPredicate(CAVObjects.SILVER_SHOT);
         makeModelPredicate(CAVObjects.PELLET_SHOT);
 
         for (Item item : CAVObjects.ITEMS.keySet()) {
-            if (item instanceof IGeoDualModel){
+            if (item instanceof IGeoDualModel) {
                 Identifier itemId = Registries.ITEM.getId(item);
                 registerRenderer(item, new TwoDItemRenderer(itemId));
             } else if (item instanceof IDualModel) {

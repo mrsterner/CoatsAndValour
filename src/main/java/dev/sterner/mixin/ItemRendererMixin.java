@@ -2,7 +2,6 @@ package dev.sterner.mixin;
 
 import dev.sterner.api.interfaces.IDualModel;
 import dev.sterner.api.interfaces.IGeoDualModel;
-import dev.sterner.common.item.BlunderbussItem;
 import net.minecraft.client.render.item.ItemModels;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;

@@ -71,8 +71,8 @@ public class GunProperties {
             return this;
         }
 
-        public Builder barrels(int barrels){
-            this.properties.barrels =  barrels;
+        public Builder barrels(int barrels) {
+            this.properties.barrels = barrels;
             return this;
         }
     }

@@ -5,16 +5,11 @@ import net.minecraft.entity.damage.DamageType;
 import net.minecraft.entity.damage.DamageTypes;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.function.ValueLists;
-import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
 import java.util.function.IntFunction;
 
 public class ProjectileProperties {

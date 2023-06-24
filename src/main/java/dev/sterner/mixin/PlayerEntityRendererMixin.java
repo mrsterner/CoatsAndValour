@@ -18,7 +18,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
     }
 
     @Inject(method = "setModelPose", at = @At("TAIL"))
-    private void cav$updateBoneVisibility(AbstractClientPlayerEntity player, CallbackInfo ci){
+    private void cav$updateBoneVisibility(AbstractClientPlayerEntity player, CallbackInfo ci) {
         PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel = this.getModel();
         if (!player.isSpectator()) {
             CAVComponents.PLAYER_COMPONENT.maybeGet(player).ifPresent(playerDataComponent -> {

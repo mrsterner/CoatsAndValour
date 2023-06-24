@@ -3,9 +3,6 @@ package dev.sterner.client.render.item;
 import dev.sterner.common.util.CAVUtils;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.resource.IdentifiableResourceReloadListener;
-import net.minecraft.block.Block;
-import net.minecraft.block.StainedGlassPaneBlock;
-import net.minecraft.block.TransparentBlock;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.item.ItemRenderer;
@@ -13,13 +10,10 @@ import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Unit;
-import net.minecraft.util.math.MatrixUtil;
 import net.minecraft.util.profiler.Profiler;
 
 import java.util.concurrent.CompletableFuture;
@@ -35,7 +29,7 @@ public class TwoDItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
         this.id = new Identifier(itemId.getNamespace(), itemId.getPath() + "_renderer");
         this.itemId = itemId;
     }
-    
+
     @Override
     public CompletableFuture<Void> reload(Synchronizer synchronizer, ResourceManager manager, Profiler prepareProfiler, Profiler applyProfiler, Executor prepareExecutor, Executor applyExecutor) {
         return synchronizer.whenPrepared(Unit.INSTANCE).thenRunAsync(() -> {
