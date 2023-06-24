@@ -36,22 +36,22 @@ public interface CAVObjects {
     Item NOCK_GUN = register("nock_gun", new NockItem(new Item.Settings(), new GunProperties.Builder().range(24).maxAmmo(3).barrels(3).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
     Item SANGUINE_HUNTER = register("sanguine_hunter", new SanguineHunterItem(new Item.Settings(), new GunProperties.Builder().range(24).maxAmmo(3).barrels(3).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
     Item PISTOL_SWORD = register("pistol_sword", new PistolSwordItem(new Item.Settings(), new GunProperties.Builder().range(24).maxAmmo(3).barrels(3).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
+    Item SABRE = register("sabre", new SabreItem(new Item.Settings()));
 
-    Item BANDAGE = register("bandage", new Item(new Item.Settings()));
-    Item BATTLE_MAP = register("battle_map", new Item(new Item.Settings()));
-    Item BLOCK_RAMMER = register("block_rammer", new Item(new Item.Settings()));
-    Item BONE_SAW = register("bone_saw", new Item(new Item.Settings()));
-    Item CASESHOT = register("caseshot", new Item(new Item.Settings()));
-    Item NATION_FLAG = register("nation_flag", new Item(new Item.Settings()));
     Item MUSKET_SHOT = register("musket_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().damageSource(DamageTypes.GENERIC).build()));
     Item PELLET_SHOT = register("pellet_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
     Item PISTOL_SHOT = register("pistol_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
-    Item POWDER_CHARGE = register("powder_charge", new Item(new Item.Settings()));
-    Item RAMROD = register("ramrod", new Item(new Item.Settings()));
-    Item ROUNDSHOT = register("roundshot", new Item(new Item.Settings()));
-    Item SABRE = register("sabre", new SabreItem(new Item.Settings()));
-    Item SHELLSHOT = register("shellshot", new Item(new Item.Settings()));
     Item SILVER_SHOT = register("silver_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
+    Item ROUNDSHOT = register("roundshot", new Item(new Item.Settings()));
+    Item CASESHOT = register("caseshot", new Item(new Item.Settings()));
+    Item SHELLSHOT = register("shellshot", new Item(new Item.Settings()));
+    Item POWDER_CHARGE = register("powder_charge", new Item(new Item.Settings()));
+    Item BANDAGE = register("bandage", new Item(new Item.Settings()));
+    Item BATTLE_MAP = register("battle_map", new Item(new Item.Settings()));
+    Item BONE_SAW = register("bone_saw", new Item(new Item.Settings()));
+    Item NATION_FLAG = register("nation_flag", new Item(new Item.Settings()));
+    Item RAMROD = register("ramrod", new Item(new Item.Settings()));
+    Item BLOCK_RAMMER = register("block_rammer", new Item(new Item.Settings()));
     Item SPONGE = register("sponge", new Item(new Item.Settings()));
 
     static <T extends Item> T register(String name, T item) {

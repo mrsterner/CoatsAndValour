@@ -1,0 +1,90 @@
+{
+  "blunderbuss_close": {
+    "sounds": [
+      "coats-and-valour:blunderbuss_close_1",
+      "coats-and-valour:blunderbuss_close_2",
+      "coats-and-valour:blunderbuss_close_3"
+    ],
+    "subtitle": "subtitles.gun.blunderbuss_close"
+  },
+  "blunderbuss_distant": {
+    "sounds": [
+      "coats-and-valour:blunderbuss_distant_1",
+      "coats-and-valour:blunderbuss_distant_2",
+      "coats-and-valour:blunderbuss_distant_3"
+    ],
+    "subtitle": "subtitles.gun.blunderbuss_distant"
+  },
+  "bullet_crack": {
+    "sounds": [
+      "coats-and-valour:bullet_crack"
+    ],
+    "subtitle": "subtitles.gun.bullet_crack"
+  },
+  "cannon_close": {
+    "sounds": [
+      "coats-and-valour:cannon_close_1",
+      "coats-and-valour:cannon_close_2",
+      "coats-and-valour:cannon_close_3"
+    ],
+    "subtitle": "subtitles.entity.cannon_close"
+  },
+  "cannon_distant": {
+    "sounds": [
+      "coats-and-valour:cannon_distant_1",
+      "coats-and-valour:cannon_distant_2",
+      "coats-and-valour:cannon_distant_3"
+    ],
+    "subtitle": "subtitles.entity.cannon_distant"
+  },
+  "cocked": {
+    "sounds": [
+      "coats-and-valour:cocked"
+    ],
+    "subtitle": "subtitles.gun.cocked"
+  },
+  "musket_close": {
+    "sounds": [
+      "coats-and-valour:musket_close_1",
+      "coats-and-valour:musket_close_2",
+      "coats-and-valour:musket_close_3"
+    ],
+    "subtitle": "subtitles.gun.musket_close"
+  },
+  "musket_distant": {
+    "sounds": [
+      "coats-and-valour:musket_distant_1",
+      "coats-and-valour:musket_distant_2",
+      "coats-and-valour:musket_distant_3"
+    ],
+    "subtitle": "subtitles.gun.musket_distant"
+  },
+  "pan_primed": {
+    "sounds": [
+      "coats-and-valour:pan_primed"
+    ],
+    "subtitle": "subtitles.gun.pan_primed"
+  },
+  "pistol_close": {
+    "sounds": [
+      "coats-and-valour:pistol_close_1",
+      "coats-and-valour:pistol_close_2",
+      "coats-and-valour:pistol_close_3"
+    ],
+    "subtitle": "subtitles.gun.pistol_close"
+  },
+  "pistol_distant": {
+    "sounds": [
+      "coats-and-valour:pistol_distant_1",
+      "coats-and-valour:pistol_distant_2",
+      "coats-and-valour:pistol_distant_3"
+    ],
+    "subtitle": "subtitles.gun.pistol_distant"
+  },
+  "ramrod": {
+    "sounds": [
+      "coats-and-valour:ramrod"
+    ],
+    "subtitle": "subtitles.gun.ramrod"
+  }
+}

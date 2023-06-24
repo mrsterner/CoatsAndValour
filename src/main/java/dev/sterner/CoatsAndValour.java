@@ -21,5 +21,6 @@ public class CoatsAndValour implements ModInitializer {
         CAVEntityTypes.init();
         CAVParticleTypes.init();
         CAVTagKeys.init();
+        CAVSoundEvents.init();
     }
 }
