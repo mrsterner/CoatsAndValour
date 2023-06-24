@@ -25,6 +25,9 @@
     ],
     "emi": [
       "dev.sterner.client.integration.emi.CAVEmiPlugin"
+    ],
+    "cardinal-components-entity": [
+      "dev.sterner.registry.CAVComponents"
     ]
   },
   "mixins": [
@@ -38,5 +41,10 @@
     "fabric-api": "*",
     "azurelib": "*",
     "smartbrainlib": "*"
+  },
+  "custom": {
+    "cardinal-components": [
+      "coats-and-valour:player"
+    ]
   }
 }

@@ -23,6 +23,10 @@ repositories {
 		url "https://dl.cloudsmith.io/public/azuredoom-mods/azurelib/maven/"
 	}
 	maven {
+		name = "CCA"
+		url = "https://maven.ladysnake.org/releases"
+	}
+	maven {
 		name = "Jitpack"
 		url = "https://jitpack.io"
 	}
@@ -73,6 +77,10 @@ dependencies {
 
 	//MixinExtras
 	include(implementation(annotationProcessor("com.github.llamalad7.mixinextras:mixinextras-fabric:0.2.0-beta.6")))
+
+	//CCA
+	modImplementation include ("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cca_version}")
+	modImplementation include ("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
 }
 
 processResources {

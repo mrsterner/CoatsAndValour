@@ -36,5 +36,7 @@ public class CAVLanguageProvider extends FabricLanguageProvider {
         builder.add(CAVObjects.SHELLSHOT, "Shellshot");
         builder.add(CAVObjects.SILVER_SHOT, "Silver Shot");
         builder.add(CAVObjects.SPONGE, "Sponge");
+
+        builder.add(CAVObjects.DEBUG, "Debug Wand");
     }
 }

@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
 import net.minecraft.data.client.Models;
+import net.minecraft.item.Items;
 
 public class CAVModelProvider extends FabricModelProvider {
     public CAVModelProvider(FabricDataOutput output) {
@@ -30,5 +31,7 @@ public class CAVModelProvider extends FabricModelProvider {
         generator.register(CAVObjects.ROUNDSHOT, Models.GENERATED);
         generator.register(CAVObjects.SHELLSHOT, Models.GENERATED);
         generator.register(CAVObjects.SPONGE, Models.GENERATED);
+
+        generator.register(CAVObjects.DEBUG, Items.STICK, Models.GENERATED);
     }
 }

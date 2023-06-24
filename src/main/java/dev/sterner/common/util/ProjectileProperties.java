@@ -67,7 +67,7 @@ public class ProjectileProperties {
         return gun;
     }
 
-    public static ProjectileProperties readNbt(NbtCompound gun, @Nullable World world) {
+    public static ProjectileProperties readNbt(NbtCompound gun) {
         NbtCompound properties = gun.getCompound("Properties");
         ProjectileProperties projectileProperties = new ProjectileProperties();
         projectileProperties.ammoType = AmmoType.byId(properties.getInt("AmmoType"));

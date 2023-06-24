@@ -286,7 +286,7 @@ public abstract class CockableGunItem extends Item {
 
     public GunInfo getGunProps(ItemStack stack) {
         NbtCompound nbtCompound = stack.getOrCreateNbt().getCompound(GUN);
-        ProjectileProperties properties = ProjectileProperties.readNbt(nbtCompound, MinecraftClient.getInstance().world);
+        ProjectileProperties properties = ProjectileProperties.readNbt(nbtCompound);
         return GunInfo.of(GunInfo.Cock.byId(nbtCompound.getInt(COCKED)), properties, getLoadedAmmoInfo(stack));
     }
 
