@@ -1,5 +1,6 @@
 package dev.sterner.mixin;
 
+import dev.sterner.client.render.feature.PegLegFeatureRenderer;
 import dev.sterner.registry.CAVComponents;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -17,13 +18,18 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
         super(ctx, model, shadowRadius);
     }
 
+    @Inject(method = "<init>", at = @At("TAIL"))
+    private void cav$init(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
+        this.addFeature(new PegLegFeatureRenderer<>(this, ctx.getModelLoader()));
+    }
+
     @Inject(method = "setModelPose", at = @At("TAIL"))
     private void cav$updateBoneVisibility(AbstractClientPlayerEntity player, CallbackInfo ci) {
         PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel = this.getModel();
         if (!player.isSpectator()) {
             CAVComponents.PLAYER_COMPONENT.maybeGet(player).ifPresent(playerDataComponent -> {
                 if (playerDataComponent.playerModel == null) {
-                    playerDataComponent.setPlayerComponent(playerEntityModel);
+                    playerDataComponent.setPlayerModel(playerEntityModel);
                 }
                 playerDataComponent.updatePlayerModel();
                 playerEntityModel.rightLeg.visible = playerDataComponent.playerModel.rightLeg.visible;

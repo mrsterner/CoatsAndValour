@@ -78,6 +78,7 @@ public interface CAVObjects {
         BLOCKS.keySet().forEach(block -> Registry.register(Registries.BLOCK, BLOCKS.get(block), block));
         ITEMS.keySet().forEach(item -> Registry.register(Registries.ITEM, ITEMS.get(item), item));
 
+        ITEMS.keySet().remove(DEBUG);
         ItemGroupEvents.modifyEntriesEvent(CAV_ITEM_GROUP).register(entries -> ITEMS.keySet().forEach(entries::add));
     }
 }

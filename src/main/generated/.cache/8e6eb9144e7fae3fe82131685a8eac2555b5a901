@@ -1,13 +1,13 @@
-// 1.20.1	2023-06-24T16:28:15.638227059	Coats and Valour/Model Definitions
+// 1.20.1	2023-06-24T22:41:53.522830826	Coats and Valour/Model Definitions
 95efb2102b3703ee7212f00b0f58f25b80127fb5 assets/coats-and-valour/models/item/nation_flag.json
 07985c7242879e4f0d6acbd5bf8a8dc3285d1830 assets/coats-and-valour/models/item/powder_charge.json
 dcc79d38f04ba983983500cfda3fd72fabcf4775 assets/coats-and-valour/models/item/caseshot.json
 801a3369b25792a61e5fc01779e31f1649092905 assets/coats-and-valour/models/item/ramrod.json
-0872d348acc79c974d06d63cccf35b12a67ca74e assets/coats-and-valour/models/item/block_rammer.json
 6b3e8a43be9b814d653017cb3605e1c380a5b535 assets/coats-and-valour/models/item/bandage.json
+0872d348acc79c974d06d63cccf35b12a67ca74e assets/coats-and-valour/models/item/block_rammer.json
 640e1a99d079ad791d0e0d7fd1542f908748d8db assets/coats-and-valour/models/item/shellshot.json
 3635e78fd947e790cb1b25c74deb2f03e1790e5f assets/coats-and-valour/models/item/battle_map.json
-744fcbaebd95fae62e2d4cbe57af5eecf8d92c98 assets/coats-and-valour/models/item/debug.json
 8a26d649b27061185e03994627468338f7c11ef0 assets/coats-and-valour/models/item/roundshot.json
+744fcbaebd95fae62e2d4cbe57af5eecf8d92c98 assets/coats-and-valour/models/item/debug.json
 50cf365392f777ee2c393c8386064e94fd42ac6b assets/coats-and-valour/models/item/sponge.json
 64e38d25b15beb822ecd2f94e04af1f9f92f8865 assets/coats-and-valour/models/item/bone_saw.json
