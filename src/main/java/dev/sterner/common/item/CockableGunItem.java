@@ -39,7 +39,7 @@ public abstract class CockableGunItem extends Item {
     private final String GUN = "Gun";
 
     public CockableGunItem(Settings settings, GunProperties gunProperties) {
-        super(settings);
+        super(settings.maxCount(1));
         this.handler = new RecoilHandler();
         this.gunProperties = gunProperties;
     }
@@ -138,7 +138,12 @@ public abstract class CockableGunItem extends Item {
         if (gunProperties.getBarrels() > 1 && getTotalAmmo(stack) < gunProperties.getMaxAmmo()) {
             modifyGun(stack, GunInfo.Cock.UNCOCKED);
         } else {
-            modifyGun(stack, getCockedStage(stack).next());
+            if (stack.getNbt() != null) {
+                ProjectileProperties properties = ProjectileProperties.readNbt(stack.getNbt());
+                increaseAmmo(stack, properties.getAmmoType());
+                modifyGun(stack, getCockedStage(stack).next());
+            }
+
         }
     }
 
@@ -157,29 +162,33 @@ public abstract class CockableGunItem extends Item {
         ProjectileProperties projectileProperties = gunInfo.getAmmoItem();
 
         int shots = decreaseAmmo(itemStack, gunProperties.getShots());
-        handler.recoil(player, projectileProperties.getRecoilPower());
-        if (projectileProperties.getSound() != null) {
-            world.playSound(null, player.getBlockPos(), projectileProperties.getSound(), SoundCategory.PLAYERS);
-        }
+        System.out.println("Shots: " + shots);
+        if (shots > 0) {
+            handler.recoil(player, projectileProperties.getRecoilPower());
+            if (projectileProperties.getSound() != null) {
+                world.playSound(null, player.getBlockPos(), projectileProperties.getSound(), SoundCategory.PLAYERS);
+            }
 
-        Vec3d vec3d = player.getCameraPosVec(1);
-        Vec3d vec3d2 = player.getRotationVec(1);
-        Vec3d vec3d3 = vec3d.add(vec3d2.x * gunProperties.getRange(), vec3d2.y * gunProperties.getRange(), vec3d2.z * gunProperties.getRange());
+            Vec3d vec3d = player.getCameraPosVec(1);
+            Vec3d vec3d2 = player.getRotationVec(1);
+            Vec3d vec3d3 = vec3d.add(vec3d2.x * gunProperties.getRange(), vec3d2.y * gunProperties.getRange(), vec3d2.z * gunProperties.getRange());
 
-        ParticleUtils.generateParticleVector(world, player, (ParticleEffect) CAVParticleTypes.SMOKE, 1, 5, true);
+            ParticleUtils.generateParticleVector(world, player, (ParticleEffect) CAVParticleTypes.SMOKE, 1, 5, true);
 
-        double distance = Math.pow(gunProperties.getRange(), 2);
+            double distance = Math.pow(gunProperties.getRange(), 2);
 
-        EntityHitResult hitt = ProjectileUtil.getEntityCollision(player.getWorld(), player, vec3d, vec3d3,
-                player.getBoundingBox().stretch(vec3d2.multiply(distance)).expand(1.0D, 1.0D, 1.0D),
-                (target) -> !target.isSpectator() && player.canSee(target));
+            EntityHitResult hitt = ProjectileUtil.getEntityCollision(player.getWorld(), player, vec3d, vec3d3,
+                    player.getBoundingBox().stretch(vec3d2.multiply(distance)).expand(0.25D, 0.25D, 0.25D),
+                    (target) -> !target.isSpectator() && player.canSee(target));
 
 
-        HitResult blockHit = world.raycast(new RaycastContext(vec3d, vec3d3, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, player));
+            HitResult blockHit = world.raycast(new RaycastContext(vec3d, vec3d3, RaycastContext.ShapeType.COLLIDER, RaycastContext.FluidHandling.NONE, player));
+            modifyGun(itemStack, GunInfo.Cock.UNCOCKED);
 
-        if (hitt != null && hitt.getEntity() != null && (blockHit.squaredDistanceTo(player) > hitt.getEntity().squaredDistanceTo(player))) {
-            hitt.getEntity().damage(world.getDamageSources().create(projectileProperties.getDamageSource()), projectileProperties.getProjectileDamage());
-            return true;
+            if (hitt != null && hitt.getEntity() != null && (blockHit.squaredDistanceTo(player) > hitt.getEntity().squaredDistanceTo(player))) {
+                hitt.getEntity().damage(world.getDamageSources().create(projectileProperties.getDamageSource()), projectileProperties.getProjectileDamage());
+                return true;
+            }
         }
 
         return false;
@@ -211,12 +220,22 @@ public abstract class CockableGunItem extends Item {
     public void increaseAmmo(ItemStack stack, ProjectileProperties.AmmoType ammoType) {
         GunInfo info = getGunProps(stack);
         List<AmmoInfo> newList = info.getAmmoInfoList();
-
-        for (AmmoInfo ammoInfo : newList) {
-            if (ammoInfo.type == ammoType && getTotalAmmo(stack) < gunProperties.getMaxAmmo()) {
-                ammoInfo.count = ammoInfo.count + 1;
-                break;
+        var s = newList.stream().map(ammoInfo -> ammoInfo.type).toList();
+        System.out.println("S: " + s);
+        if (s.contains(ammoType)) {
+            for (AmmoInfo ammoInfo : newList) {
+                if (ammoInfo.type == ammoType && getTotalAmmo(stack) < gunProperties.getMaxAmmo()) {
+                    ammoInfo.count = ammoInfo.count + 1;
+                    break;
+                }
             }
+        } else {
+            if (newList.size() < gunProperties.getMaxAmmo()) {
+                newList.add(new AmmoInfo(ammoType, 1));
+            }
+        }
+        for (AmmoInfo info1 : newList) {
+            System.out.println("Info: " + info1.type + " : " + info1.count);
         }
         modifyGun(stack, newList);
     }

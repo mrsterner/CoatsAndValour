@@ -8,7 +8,7 @@ public class CockableToolGunItem extends CockableGunItem {
     private final ToolMaterial material;
 
     public CockableToolGunItem(Settings settings, ToolMaterial material, GunProperties gunProperties) {
-        super(settings.maxDamageIfAbsent(material.getDurability()), gunProperties);
+        super(settings, gunProperties);
         this.material = material;
     }
 

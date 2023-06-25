@@ -12,6 +12,27 @@ public class SmokeParticle extends LargeFireSmokeParticle {
         red = 1;
         green = 1;
         blue = 1;
+        this.maxAge = world.getRandom().nextBetween(30, 60) * 20;
+        this.gravityStrength = -0.001F;
+    }
+
+    @Override
+    public void tick() {
+        this.setSpriteForAge(this.spriteProvider);
+        super.tick();
+        this.prevPosX = this.x;
+        this.prevPosY = this.y;
+        this.prevPosZ = this.z;
+        if (this.age++ >= this.maxAge) {
+            this.markDead();
+        } else {
+            this.velocityY -= 0.001 * (double)this.gravityStrength;
+            this.move(this.velocityX, this.velocityY, this.velocityZ);
+            if (this.field_28787 && this.y == this.prevPosY) {
+                this.velocityX *= 1.1;
+                this.velocityZ *= 1.1;
+            }
+        }
     }
 
     @Override

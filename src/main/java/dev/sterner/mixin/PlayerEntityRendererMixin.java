@@ -20,11 +20,12 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
 
     @Inject(method = "<init>", at = @At("TAIL"))
     private void cav$init(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
-        this.addFeature(new PegLegFeatureRenderer<>(this, ctx.getModelLoader()));
+        //this.addFeature(new PegLegFeatureRenderer<>(this, ctx.getModelLoader()));
     }
 
     @Inject(method = "setModelPose", at = @At("TAIL"))
     private void cav$updateBoneVisibility(AbstractClientPlayerEntity player, CallbackInfo ci) {
+        /*
         PlayerEntityModel<AbstractClientPlayerEntity> playerEntityModel = this.getModel();
         if (!player.isSpectator()) {
             CAVComponents.PLAYER_COMPONENT.maybeGet(player).ifPresent(playerDataComponent -> {
@@ -45,5 +46,7 @@ public abstract class PlayerEntityRendererMixin extends LivingEntityRenderer<Abs
                 playerEntityModel.leftSleeve.visible = playerDataComponent.playerModel.leftArm.visible;
             });
         }
+
+         */
     }
 }

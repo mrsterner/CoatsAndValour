@@ -10,8 +10,11 @@ import org.spongepowered.asm.mixin.injection.At;
 
 @Mixin(MinecraftClient.class)
 public class MinecraftClientMixin {
+
     @WrapWithCondition(method = "doItemUse", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerEntity;swingHand(Lnet/minecraft/util/Hand;)V"))
     private boolean cav$dontSwingHand(ClientPlayerEntity player, Hand hand) {
         return !(player.getStackInHand(hand).getItem() instanceof CockableGunItem);
     }
+
+
 }

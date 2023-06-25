@@ -40,10 +40,10 @@ public interface CAVObjects {
     Item PISTOL_SWORD = register("pistol_sword", new PistolSwordItem(new Item.Settings(), new GunProperties.Builder().range(24).maxAmmo(3).barrels(3).reloadSound(SoundEvents.BLOCK_LEVER_CLICK).build()));
     Item SABRE = register("sabre", new SabreItem(new Item.Settings()));
 
-    Item MUSKET_SHOT = register("musket_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().damageSource(DamageTypes.GENERIC).build()));
-    Item PELLET_SHOT = register("pellet_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
-    Item PISTOL_SHOT = register("pistol_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
-    Item SILVER_SHOT = register("silver_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().build()));
+    Item MUSKET_SHOT = register("musket_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().recoilPower(10).damageSource(DamageTypes.GENERIC).build()));
+    Item PELLET_SHOT = register("pellet_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().recoilPower(10).build()));
+    Item PISTOL_SHOT = register("pistol_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().recoilPower(10).build()));
+    Item SILVER_SHOT = register("silver_shot", new AmmoItem(new Item.Settings(), new ProjectileProperties.Builder().recoilPower(10).build()));
     Item ROUNDSHOT = register("roundshot", new Item(new Item.Settings()));
     Item CASESHOT = register("caseshot", new Item(new Item.Settings()));
     Item SHELLSHOT = register("shellshot", new Item(new Item.Settings()));

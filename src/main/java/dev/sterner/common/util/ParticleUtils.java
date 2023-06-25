@@ -10,7 +10,7 @@ public class ParticleUtils {
     public static void generateParticleVector(World world, Vec3d startPos, Vec3d direction, ParticleEffect effect, double steps, int count, boolean cone) {
         for (int i = 0; i < count; i++) {
             Vec3d pos = startPos.add(direction.x * steps * i, direction.y * steps * i, direction.z * steps * i);
-            world.addImportantParticle(effect, true, pos.getX(), pos.getY(), pos.getZ(), 0.0, 0.02, 0.0);
+            world.addImportantParticle(effect, true, pos.getX(), pos.getY(), pos.getZ(), 0.0, 0.000, 0.0);
             if (cone) {
                 double radius = 0.25 * i;
                 int numPoints = 10;
@@ -21,7 +21,7 @@ public class ParticleUtils {
                     double offsetY = Math.cos(angle) * Math.sin(angle) * radius;
 
                     Vec3d conePos = pos.add(offsetX, offsetY, offsetZ);
-                    world.addImportantParticle(effect, true, conePos.getX(), conePos.getY(), conePos.getZ(), 0.0, 0.02, 0.0);
+                    world.addImportantParticle(effect, true, conePos.getX(), conePos.getY(), conePos.getZ(), 0.0, 0.000, 0.0);
                 }
             }
         }

@@ -44,6 +44,6 @@ public class GeoDualModelItemRenderer<T extends GeoCockableGunItem> extends GeoI
 
     @Override
     protected void renderInGui(ModelTransformationMode transformType, MatrixStack poseStack, VertexConsumerProvider bufferSource, int packedLight, int packedOverlay) {
-
+        //super.renderInGui(transformType, poseStack, bufferSource, packedLight, packedOverlay);
     }
 }

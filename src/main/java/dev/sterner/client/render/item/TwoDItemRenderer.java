@@ -58,6 +58,7 @@ public class TwoDItemRenderer implements BuiltinItemRendererRegistry.DynamicItem
             renderItem(itemRenderer, stack, mode, false, matrices, vertexConsumers, CAVUtils.MAX_LIGHT, overlay, this.inventoryModel);
             DiffuseLighting.disableGuiDepthLighting();
         }
+
     }
 
     public void renderItem(ItemRenderer itemRenderer, ItemStack stack, ModelTransformationMode renderMode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay, BakedModel model) {

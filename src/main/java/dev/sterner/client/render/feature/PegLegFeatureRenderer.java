@@ -29,7 +29,6 @@ public class PegLegFeatureRenderer<T extends LivingEntity, M extends BipedEntity
         CAVComponents.PLAYER_COMPONENT.maybeGet(entity).ifPresent(component -> {
             MODEL.leftPeg.visible = false;
             MODEL.rightPeg.visible = false;
-            matrices.push();
             if (component.getRightLegPegged()) {
                 MODEL.rightPeg.visible = true;
                 matrices.push();

@@ -27,6 +27,7 @@ public class ItemRendererMixin {
 
     @Inject(method = "getModel", at = @At("HEAD"), cancellable = true)
     private void cav$getHeldItemModel(ItemStack stack, World world, LivingEntity entity, int seed, CallbackInfoReturnable<BakedModel> cir) {
+
         if (stack.getItem() instanceof IGeoDualModel) {
             Identifier itemId = Registries.ITEM.getId(stack.getItem());
             var m = new ModelIdentifier(itemId.withPath(itemId.getPath() + "_handheld"), "inventory");
@@ -41,5 +42,7 @@ public class ItemRendererMixin {
             BakedModel bakedModel2 = bakedModel.getOverrides().apply(bakedModel, stack, clientWorld, entity, seed);
             cir.setReturnValue(bakedModel2 == null ? this.models.getModelManager().getMissingModel() : bakedModel2);
         }
+
+
     }
 }
