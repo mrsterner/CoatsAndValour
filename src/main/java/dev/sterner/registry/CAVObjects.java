@@ -48,7 +48,7 @@ public interface CAVObjects {
     Item CASESHOT = register("caseshot", new Item(new Item.Settings()));
     Item SHELLSHOT = register("shellshot", new Item(new Item.Settings()));
     Item POWDER_CHARGE = register("powder_charge", new Item(new Item.Settings()));
-    Item BANDAGE = register("bandage", new Item(new Item.Settings()));
+    Item BANDAGE = register("bandage", new BandageItem(new Item.Settings()));
     Item BATTLE_MAP = register("battle_map", new Item(new Item.Settings()));
     Item BONE_SAW = register("bone_saw", new Item(new Item.Settings()));
     Item NATION_FLAG = register("nation_flag", new Item(new Item.Settings()));
