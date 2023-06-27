@@ -44,7 +44,11 @@
   },
   "custom": {
     "cardinal-components": [
-      "coats-and-valour:player"
-    ]
+      "coats-and-valour:player",
+      "coats-and-valour:nation_chunk"
+    ],
+    "loom:injected_interfaces": {
+      "net/minecraft/class_2791": ["dev/sterner/common/NationChunk"]
+    }
   }
 }

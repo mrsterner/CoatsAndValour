@@ -1,6 +1,7 @@
 package dev.sterner.datagen;
 
 import dev.sterner.registry.CAVObjects;
+import dev.sterner.registry.CoatsAndValourMobEffects;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 
@@ -36,6 +37,9 @@ public class CAVLanguageProvider extends FabricLanguageProvider {
         builder.add(CAVObjects.SHELLSHOT, "Shellshot");
         builder.add(CAVObjects.SILVER_SHOT, "Silver Shot");
         builder.add(CAVObjects.SPONGE, "Sponge");
+
+        builder.add(CoatsAndValourMobEffects.BLEED, "Bleed");
+        builder.add(CoatsAndValourMobEffects.GANGRENE, "Gangrene");
 
         builder.add(CAVObjects.DEBUG, "Debug Wand");
     }

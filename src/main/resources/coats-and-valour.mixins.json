@@ -8,6 +8,7 @@
     "PlayerEntityRendererMixin"
   ],
   "mixins": [
+    "ChunkMixin"
   ],
   "injectors": {
     "defaultRequire": 1
