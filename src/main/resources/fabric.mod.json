@@ -45,10 +45,12 @@
   "custom": {
     "cardinal-components": [
       "coats-and-valour:player",
-      "coats-and-valour:nation_chunk"
+      "coats-and-valour:nation_chunk",
+      "coats-and-valour:bleed"
     ],
     "loom:injected_interfaces": {
-      "net/minecraft/class_2791": ["dev/sterner/common/NationChunk"]
+      "net/minecraft/class_2791": ["dev/sterner/common/NationChunk"],
+      "net/minecraft/class_1309": ["dev/sterner/CoatsAndValourEntity"]
     }
   }
 }
